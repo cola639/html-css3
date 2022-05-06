@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>高度塌陷 high collapse</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 200px;
+      background-color: red;
+    }
+
+    .container::after {
+      content: '';
+      clear: both;
+      display: block;
+      visibility: hidden;
+      height: 0;
+    }
+
+    .left {
+      background-color: yellow;
+      float: left;
+      height: 50px;
+      width: 50px;
+    }
+    .right {
+      background-color: yellow;
+      float: right;
+      height: 50px;
+      width: 50px;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <span class="left">float</span>
+      <span>标准流</span>
+      <span class="right">float</span>
+    </div>
+    <div
+      class="box"
+      style="width: 200px; height: 200px; background: blue"
+    ></div>
+  </body>
+</html>
+<!-- 
+  在标准文档流中，父元素的高度默认是被子元素撑开的，也就是子元素多高，父元素就多高。
+  但是当为子元素设置浮动以后，子元素会完全脱离文档流，
+  此时将会导致子元素无法撑起父元素的高度，导致父元素的高度塌陷。
+
+  方法1: 父元素设置 overflow: auto 或者 overflow: hidden
+  方法2：父元素after 伪类
+-->
