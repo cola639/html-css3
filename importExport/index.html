@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Import Export</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./highlight.js/es/index.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+  </head>
+  <body></body>
+  <!-- <script src="./index.js"></script> -->
+  <script type="module">
+    import { marked } from "./marked/lib/marked.esm.js"
+
+    console.log("🚀 >> hljs", hljs)
+    console.log("marked", marked)
+    import { a } from "./index.js" //引入必须加.js suffix
+    console.log(a) // 1
+  </script>
+</html>
