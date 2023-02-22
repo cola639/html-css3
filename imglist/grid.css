@@ -1,5 +1,4 @@
 .container {
-  box-sizing: border-box;
   display: grid;
   justify-content: space-between;
   grid-template-columns: repeat(5, 18.5%);
