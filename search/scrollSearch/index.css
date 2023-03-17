@@ -6,7 +6,6 @@ body {
   background: #ebebeb;
   border-radius: 20px;
   border: none;
-  box-shadow: 0.6s;
   cursor: pointer;
   height: 40px;
   transition: width 0.6s;
@@ -15,6 +14,8 @@ body {
 .search-box + label .search-icon {
   color: black;
 }
+
+/* hover */
 .search-box:hover {
   color: white;
   background: #c8c8c8;
@@ -23,6 +24,8 @@ body {
 .search-box:hover + label .search-icon {
   color: white;
 }
+
+/* focus */
 .search-box:focus {
   transition: width 0.6s cubic-bezier(0, 1.22, 0.66, 1.39);
   border: none;
@@ -35,6 +38,8 @@ body {
   background: #ebebeb;
   color: black;
 }
+
+/* ' + ' 紧接着 */
 .search-box:focus + label .search-icon {
   color: black;
 }
