@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Full Screen Demo</title>
+    <style type="text/css">
+      #myDiv {
+        width: 400px;
+        height: 300px;
+        background-color: #808080;
+      }
+      #childDiv {
+        width: 200px;
+        height: 150px;
+        background-color: #3315ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="myDiv">
+      <div id="childDiv"></div>
+    </div>
+    <button onclick="enterFullscreen()">Fullscreen</button>
+    <button onclick="childEnterFullscreen()">Child Fullscreen</button>
+
+    <script>
+      function enterFullscreen() {
+        var elem = document.getElementById("myDiv")
+        elem.requestFullscreen()
+      }
+
+      function childEnterFullscreen() {
+        var elem = document.getElementById("childDiv")
+        elem.requestFullscreen()
+      }
+    </script>
+  </body>
+</html>
