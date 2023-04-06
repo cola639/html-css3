@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatBox</title>
+    <link rel="stylesheet" href="./index.css" />
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+  </head>
+  <body>
+    <div class="chatbox">
+      <div class="chatbox__header">
+        <svg
+          width="20"
+          height="20"
+          viewbox="0 0 18 18"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M15 8.25H5.87l4.19-4.19L9 3 3 9l6 6 1.06-1.06-4.19-4.19H15v-1.5z"
+          ></path>
+        </svg>
+        <div class="title">XX客服</div>
+        <div class="close">X</div>
+      </div>
+      <div class="chatbox__body">
+        <div class="message receive">
+          <img src="./service.jpg" />
+          <div class="message_text">Hello There</div>
+        </div>
+        <div class="message sender">
+          <img src="./service.jpg" />
+          <div class="message_text">Hello There</div>
+        </div>
+      </div>
+      <div class="chatbox__input">
+        <input placeholder="输入文字发送" />
+        <button title="发送">
+          <svg
+            width="36"
+            height="36"
+            viewbox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </body>
+  <script src="./index.js"></script>
+</html>
