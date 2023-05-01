@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Array Image</title>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+
+    <script type="text/javascript">
+      // 定义二维数组
+      const arr = [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0],
+        [0, 1, 1, 0, 0, 0],
+        [0, 0, 0, 1, 1, 0],
+        [1, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 0],
+      ]
+
+      // 获取canvas元素和其上下文对象
+      const canvas = document.getElementById("myCanvas")
+      const ctx = canvas.getContext("2d")
+
+      // 定义格子的长和宽
+      const cellWidth = 50
+      const cellHeight = 50
+
+      // 遍历二维数组绘制矩形
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          const x = j * cellWidth
+          const y = i * cellHeight
+          ctx.beginPath()
+          ctx.rect(x, y, cellWidth, cellHeight)
+          if (arr[i][j] === 0) {
+            ctx.fillStyle = "#e6e6e6"
+          } else {
+            ctx.fillStyle = "#66ccff"
+          }
+          ctx.fill()
+        }
+      }
+
+      // 监听鼠标移动事件，实现画线
+      let isDrawing = false // 是否在画线中
+      let lastX, lastY // 上一个点的坐标
+      canvas.addEventListener("mousemove", function (e) {
+        if (!isDrawing) return // 如果不在画线中，则返回
+        ctx.strokeStyle = "#f00"
+        ctx.lineWidth = 10
+        ctx.lineCap = "round"
+        ctx.beginPath()
+        ctx.moveTo(lastX, lastY)
+        ctx.lineTo(e.offsetX, e.offsetY)
+        ctx.stroke()
+        lastX = e.offsetX
+        lastY = e.offsetY
+      })
+
+      // 监听鼠标按下和松开事件，实现画线
+      canvas.addEventListener("mousedown", function (e) {
+        isDrawing = true
+        lastX = e.offsetX
+        lastY = e.offsetY
+      })
+      canvas.addEventListener("mouseup", function () {
+        isDrawing = false
+      })
+    </script>
+  </body>
+</html>
