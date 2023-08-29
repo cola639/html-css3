@@ -6,29 +6,14 @@ body {
   justify-content: center;
   align-items: center;
 }
-body .socials {
-  position: fixed;
-  display: block;
-  left: 20px;
-  bottom: 20px;
-}
-body .socials > a {
-  display: block;
-  width: 30px;
-  opacity: 0.2;
-  transform: scale(var(--scale, 0.8));
-  transition: transform 0.3s cubic-bezier(0.38, -0.12, 0.24, 1.91);
-}
-body .socials > a:hover {
-  --scale: 1;
-}
+
 .tabs {
   --background: #ffffff;
   --grey: #c9cbd5;
   --primary: #4e29f0;
   --primary-light: #725afc;
   --secondary: #ffd100;
-  --width: 300px;
+  --width: 100vw;
   --height: 75px;
   --border-radius: var(--height);
   background: var(--background);
@@ -46,7 +31,7 @@ body .socials > a:hover {
   box-sizing: border-box;
 }
 .tabs label {
-  /* 调整大小 */
+  /* 调整单体大小 */
   width: 36px;
   height: 36px;
   cursor: pointer;
@@ -54,6 +39,7 @@ body .socials > a:hover {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  outline: none;
 }
 .tabs label::before {
   content: "";
@@ -85,6 +71,7 @@ body .socials > a:hover {
 }
 .tabs input {
   display: none;
+  outline: none;
 }
 .tabs input:checked + label::before {
   -webkit-animation: drop-animation 0.35s ease-in both;
@@ -103,16 +90,6 @@ body .socials > a:hover {
   animation: clip-animation 0.5s ease 0.3s forwards;
 }
 
-@-webkit-keyframes stretch-animation {
-  25% {
-    transform: scale3d(0.9, 1.2, 1);
-    margin-top: 10px;
-  }
-  75% {
-    transform: scale3d(1.1, 0.95, 1);
-  }
-}
-
 @keyframes stretch-animation {
   25% {
     transform: scale3d(0.9, 1.2, 1);
@@ -122,16 +99,7 @@ body .socials > a:hover {
     transform: scale3d(1.1, 0.95, 1);
   }
 }
-@-webkit-keyframes drop-animation {
-  70% {
-    transform: scale(1, 2) rotate(45deg);
-    top: -7px;
-  }
-  100% {
-    transform: scale(1.5, 0.5) rotate(45deg);
-    top: 3px;
-  }
-}
+
 @keyframes drop-animation {
   70% {
     transform: scale(1, 2) rotate(45deg);
@@ -142,18 +110,7 @@ body .socials > a:hover {
     top: 3px;
   }
 }
-@-webkit-keyframes clip-animation {
-  from {
-    opacity: 1;
-    -webkit-clip-path: circle(0% at 50% -20%);
-    clip-path: circle(0% at 50% -20%);
-  }
-  to {
-    opacity: 1;
-    -webkit-clip-path: circle(110% at top);
-    clip-path: circle(110% at top);
-  }
-}
+
 @keyframes clip-animation {
   from {
     opacity: 1;
@@ -166,18 +123,7 @@ body .socials > a:hover {
     clip-path: circle(110% at top);
   }
 }
-@-webkit-keyframes clip-animation-border {
-  from {
-    opacity: 1;
-    -webkit-clip-path: circle(20% at 50% -20%);
-    clip-path: circle(20% at 50% -20%);
-  }
-  to {
-    opacity: 1;
-    -webkit-clip-path: circle(130% at top);
-    clip-path: circle(130% at top);
-  }
-}
+
 @keyframes clip-animation-border {
   from {
     opacity: 1;
