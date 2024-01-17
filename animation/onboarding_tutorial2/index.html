@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <style type="text/css">
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    .content {
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    span {
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      margin-left: 40px;
+      margin-top: 140px;
+      margin-bottom: 0px;
+      text-align: center;
+      display: block;
+      background-color: antiquewhite;
+    }
+
+    .finally {
+      width: 100px;
+      height: 100px;
+      background-color: cornsilk;
+      border-radius: 50%;
+      line-height: 100px;
+      text-align: center;
+      margin-top: 30px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    span:nth-of-type(1) {
+      margin-top: 30px;
+    }
+    span:nth-of-type(2) {
+      margin-top: 70px;
+    }
+    span:nth-of-type(3) {
+      margin-top: 160px;
+    }
+    span:nth-of-type(4) {
+      margin-top: 160px;
+    }
+    span:nth-of-type(5) {
+      margin-top: 70px;
+    }
+    span:nth-of-type(6) {
+      margin-top: 30px;
+    }
+  </style>
+  <body>
+    <div class="content">
+      <span id="one">纳</span>
+      <span id="two">兰</span>
+      <span id="three">容</span>
+      <span id="four">若</span>
+      <span id="five">作</span>
+      <span id="six">词</span>
+    </div>
+    <div class="finally" id="finally">谢谢</div>
+  </body>
+  <script src="./index.js"></script>
+  <script>
+    let maskIntroduceManage = new MaskIntroduceManage([
+      new MaskIntroduceItem("one", "人生若只如初见"),
+      new MaskIntroduceItem("two", "何事秋风悲画扇"),
+      new MaskIntroduceItem("five", "等闲却变故人心"),
+      new MaskIntroduceItem("six", "骊山语罢清宵半"),
+      new MaskIntroduceItem("four", "却道故人心易变"),
+      new MaskIntroduceItem("finally", "谢谢大家支持！"),
+    ])
+    maskIntroduceManage.benginIntroduce()
+  </script>
+</html>
