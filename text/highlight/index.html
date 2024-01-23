@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Highlight</title>
+    <style>
+      .wrap {
+        width: 200px;
+        height: 300px;
+        background-color: #d0d0d0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h4 class="wrap_title">这是关键标题</h4>
+      <p class="wrap_des">这是一段超长的文字介绍，捕获它的关键字，进行高亮显示</p>
+      <p class="wrap_tag">这是它的关键标签</p>
+    </div>
+  </body>
+  <script>
+    // 获取包裹元素
+    const wrap = document.querySelector('.wrap')
+
+    // 定义高亮样式
+    const highlightStyle = 'background-color: yellow;'
+
+    // 将"关键"两字替换为带有高亮样式的 span 元素
+    wrap.innerHTML = wrap.innerHTML.replace(/关键/g, `<span style="${highlightStyle}">关键</span>`)
+  </script>
+</html>
