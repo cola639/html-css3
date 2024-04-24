@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>地图展示</title>
+    <!-- <link rel="stylesheet" type="text/css" href="zero.css" /> -->
+    <script language="javascript" src="http://webapi.amap.com/maps?v=1.2&key=33232c172532b36c7cc7ae148b3a3ed2"></script>
+  </head>
+  <body onLoad="mapInit()">
+    <div id="iCenter"></div>
+    <div id="iControlbox">
+      <p id="lnglat"></p>
+      <ul>
+        <li>
+          <button onclick="to2D();">2D地图</button>
+          <p>是一张普通的地图，地图级别是13。</p>
+        </li>
+        <li>
+          <button onclick="addTraffic();">实时路况</button>
+          <p>叠加上实时交通，路况信息。红色最堵。</p>
+        </li>
+        <li>
+          <button onclick="addRoadNetLayer();">路网</button>
+          <p>叠加上路网</p>
+        </li>
+        <li>
+          <button onclick="yunLayer();">麻点图</button>
+          <p>麻点图，就是云图的云图层显示。</p>
+        </li>
+        <li>
+          <button onclick="addsatellLayer();">卫星图</button>
+          <p>换上卫星图</p>
+        </li>
+        <li>
+          <button onclick="addBuildingLayer();">3D地图</button>
+          <p>显示3D楼块，只有地图级别在会显示。</p>
+        </li>
+        <!-- <li>
+          <button onclick="googlMap();">自定义底图</button>
+          <p>自定义底图，是需要自己切图的。这里展示了谷歌的底图。</p>
+        </li> -->
+        <!-- <li>
+          <button onclick="xianjianLayer();">仙剑地图</button>
+          <p>显示的仙剑地图，感觉很帅。其实这是一个图片覆盖物，而不是图层。</p>
+        </li> -->
+        <li>
+          <button onclick="jiejing();">街景</button>
+          <p>显示街景，点了这个要刷新才能回来，哈哈。</p>
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script language="javascript">
+    var mapObj
+    var point = new AMap.LngLat(120.148373, 30.290422)
+    var buildingLayer = new AMap.Buildings() //实例化3D地图图层
+    var trafficLayer = new AMap.TileLayer.Traffic({ zIndex: 10 }) //实时路况图层
+    var roadNetLayer = new AMap.TileLayer.RoadNet({ zIndex: 10 }) //实例化路网图层
+    var satellLayer = new AMap.TileLayer.Satellite({ zIndex: 10 }) //实例化卫星图
+    function mapInit() {
+      //初始化地图对象，加载地图。
+      mapObj = new AMap.Map('iCenter', {
+        center: point, //地图中心点
+        level: 15 //地图显示的缩放级别
+      })
+      AMap.event.addListener(mapObj, 'click', getLnglat) //点击事件
+    }
+    //鼠标点击，获取经纬度坐标
+    function getLnglat(e) {
+      var x = e.lnglat.getLng()
+      var y = e.lnglat.getLat()
+      document.getElementById('lnglat').innerHTML = x + ',' + y
+    }
+    function addBuildingLayer() {
+      //3D网
+      buildingLayer.setMap(mapObj) //在map中添加3D图层
+      satellLayer.setMap(null) //隐藏卫星图
+      //cloudDataLayer.setMap(null);
+      mapObj.setZoom(18)
+    }
+    function addTraffic() {
+      //交通，实时路况
+      trafficLayer.setMap(mapObj) //添加实时路况图层
+      roadNetLayer.setMap(null) //隐藏路网图层
+      satellLayer.setMap(null) //隐藏卫星图
+      //cloudDataLayer.setMap(null);
+      mapObj.setZoom(15)
+    }
+    function addRoadNetLayer() {
+      //路网
+      roadNetLayer.setMap(mapObj) //在map中添加路网图层
+      trafficLayer.setMap(null) //隐藏实时路况图层
+      satellLayer.setMap(null) //隐藏卫星图
+      //cloudDataLayer.setMap(null);
+      mapObj.setZoom(15)
+    }
+    function to2D() {
+      buildingLayer.setMap(null)
+      roadNetLayer.setMap(null)
+      trafficLayer.setMap(null)
+      mapObj.setZoom(15)
+      //   groundImage.hide()
+      // google.setMap(null)
+      //cloudDataLayer.setMap(null);
+    }
+    function addsatellLayer() {
+      satellLayer.setMap(mapObj) //在map中添加卫星图
+      buildingLayer.setMap(null)
+      roadNetLayer.setMap(null)
+      trafficLayer.setMap(null)
+      //cloudDataLayer.setMap(null);
+      mapObj.setZoom(18)
+    }
+
+    function yunLayer() {
+      buildingLayer.setMap(null)
+      roadNetLayer.setMap(null)
+      trafficLayer.setMap(null)
+      mapObj.setZoom(15)
+      //groundImage.hide();
+
+      //加载云图层插件
+      mapObj.plugin('AMap.CloudDataLayer', function () {
+        var layerOptions = {
+          query: { keywords: '' },
+          clickable: true
+        }
+        var cloudDataLayer = new AMap.CloudDataLayer('5358f853e4b01214f369d851', layerOptions) //实例化云图层类
+        cloudDataLayer.setMap(mapObj) //叠加云图层到地图
+      })
+    }
+    // function xianjianLayer() {
+    //   var bounds = new AMap.Bounds(new AMap.LngLat(120.120993, 30.271596), new AMap.LngLat(120.184593, 30.309171)),
+    //     groundImageOpts = {
+    //       opacity: 1, //图片透明度
+    //       clickable: true, //图片相应鼠标点击事件，默认：false
+    //       map: mapObj //图片叠加的地图对象
+    //     }
+    //   //实例化一个图片覆盖物对象
+    //   var groundImage = new AMap.GroundImage('xianjian.jpg', bounds, groundImageOpts)
+    //   //mapObj.setBounds(bounds);
+    //   mapObj.setZoom(15)
+    // }
+    // function googlMap() {
+    //   buildingLayer.setMap(null)
+    //   //mapObj.setZoom(15);
+    //   google = new AMap.TileLayer({
+    //     tileUrl: 'http://mt{1,2,3,0}.google.cn/vt/lyrs=m@142&hl=zh-CN&gl=cn&x=[x]&y=[y]&z=[z]&s=Galil' //图块取图地址
+    //   })
+    //   google.setMap(mapObj)
+    // }
+    function jiejing() {
+      var opts = {
+        pov: {
+          heading: 270,
+          pitch: 0
+        },
+        position: point
+      }
+      var panorama = new AMap.Panorama('iCenter', opts)
+    }
+  </script>
+</html>
