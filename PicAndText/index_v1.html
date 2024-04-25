@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .container {
+      width: 400px;
+      height: 400px;
+      background-color: pink;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .box1 {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background-color: aqua;
+      text-align: center;
+      line-height: 200px;
+    }
+
+    .box2 {
+      width: 200px;
+      height: 50px;
+      background-color: gold;
+      text-align: center;
+      line-height: 50px;
+      position: absolute; /* Position absolutely relative to container */
+      top: 50px;
+      left: 200px;
+    }
+  </style>
+
+  <body>
+    <div class="container">
+      <div class="box1">Box1</div>
+      <div class="box2">Box2</div>
+    </div>
+  </body>
+</html>
