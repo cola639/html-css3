@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      html,
+      body {
+        overflow: hidden;
+        font-family: 'Siemens Sans', Hevletica, 'sans-serif';
+        margin: 0;
+        height: 100%;
+      }
+
+      .table {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        /* background-color: rgb(48, 97, 81); */
+        margin: auto;
+        line-height: 60px;
+        text-align: center;
+      }
+
+      .table tr {
+        position: relative;
+        margin: auto;
+        /* font-size: 25px; */
+        /* color: rgb(72, 255, 0); */
+        /* opacity: 0.8; */
+      }
+
+      .scroll-box {
+        height: 800px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+        transform: translateZ(0);
+      }
+
+      /* 轮播部分表格相关设置 */
+      .scroll-tab {
+        height: 60%;
+        width: 100%;
+        position: relative;
+        background-color: rgb(15, 50, 81);
+      }
+
+      /* 表格中字体相关设置 */
+      .scroll-tab tr {
+        text-align: center;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .scrollContent {
+        height: 30px;
+        width: 100%;
+        overflow-y: auto;
+        position: relative;
+        background-color: rgb(195, 173, 230);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="table1">
+      <table border="1" class="table" style="margin: auto" cellspacing="1" cellpadding="1">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>品番</th>
+            <th>库位</th>
+            <th>数量</th>
+            <th>部门</th>
+            <th>状态</th>
+            <th>时间</th>
+          </tr>
+        </thead>
+      </table>
+
+      <div class="scroll-box">
+        <table class="scroll-tab" border="0" cellspacing="1" cellpadding="1">
+          <tbody class="scrollContent">
+            <th>序号000000</th>
+            <th>品番000000</th>
+            <th>库位000000</th>
+            <th>数量000000</th>
+            <th>部门000000</th>
+            <th>状态000000</th>
+            <th>时间000000</th>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      var carousel_speed = 15
+      var str1 = ''
+      var scrollContent = document.getElementsByClassName('scroll-box').item(0)
+      var table = document.getElementsByClassName('scroll-tab').item(0)
+
+      var object_table = {
+        //模拟数据
+        data: [
+          { id: 1, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
+          { id: 2, pinfan: '合格', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
+          { id: 3, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
+          { id: 4, pinfan: '一般', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
+          { id: 5, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
+          { id: 6, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
+          { id: 7, pinfan: '合格', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
+          { id: 8, pinfan: '合格', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
+          { id: 9, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
+          { id: 10, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' }
+        ],
+        carousel_speed: carousel_speed
+      }
+
+      var data12 = {
+        data: object_table.data
+      }
+
+      for (let n = 0; n < data12.data.length; n++) {
+        str1 +=
+          '<tr class="swiper-slide" style="height: 48px;"><td>' +
+          data12.data[n].id +
+          ' </td><td> ' +
+          data12.data[n].pinfan +
+          ' </td><td> ' +
+          data12.data[n].kuwei +
+          ' </td><td> ' +
+          data12.data[n].shuliang +
+          ' </td><td> ' +
+          data12.data[n].bumen +
+          ' </td><td> ' +
+          data12.data[n].zhuangtai +
+          ' </td><td> ' +
+          data12.data[n].shijian +
+          ' </td></tr> '
+      }
+      //不能使用innerHtml  理论上相当于无限插入 目的是复制数据 使滚动区域高度大于容器高度 实现滚动效果
+      for (let j = 0; j < 10; j++) {
+        $('.scrollContent').append(str1)
+      }
+
+      //滚动函数
+      function roll(t) {
+        var timer = setInterval(rollStart, t) // 间隔时间t
+        // 鼠标移入table时暂停滚动
+        table.onmouseover = function () {
+          clearInterval(timer)
+        }
+        // 鼠标移出table后继续滚动
+        table.onmouseout = function () {
+          timer = setInterval(rollStart, t)
+        }
+      }
+
+      // 开始滚动函数
+      function rollStart() {
+        // 正常滚动不断给scrollTop的值+1,当滚动高度大于列表内容高度时恢复为0
+        if (scrollContent.scrollTop >= scrollContent.scrollHeight / 2) {
+          //注此处高度相当于为俩个tbody高度 需除2
+          scrollContent.scrollTop = 0
+        } else {
+          scrollContent.scrollTop++
+        }
+      }
+
+      $(document).ready(function () {
+        //奇偶行颜色不一致
+        $('.scrollContent').children('tr:nth-child(even)').css('background-color', '#022459')
+        $('.scrollContent').children('tr:nth-child(odd)').css('background-color', '#01004e')
+        //表头颜色、字体等设置
+        $('.table').css('background-color', 'rgb(48, 97, 81)')
+        $('.table tr').css('font-size', '25px')
+        $('.table tr').css('color', 'rgb(72, 243, 13, 0.8)')
+        $('.table tr').css('opacity', '0.8')
+        //表格内字体颜色、大小等设置
+        $('.scroll-tab tr').css('color', 'rgb(13, 203, 203, 0.8)')
+        $('.scroll-tab tr').css('font-size', '24px')
+      })
+
+      //执行滚动函数s
+      roll(object_table.carousel_speed)
+    </script>
+  </body>
+</html>

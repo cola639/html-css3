@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <title>文字竖直方向滚动-向上滚动</title>
+  </head>
+  <style type="text/css">
+    * {
+      margin: 0px;
+      padding: 0px;
+      border: 0px;
+    }
+
+    .demo {
+      /* overflow一定要设置为hidden */
+      overflow: hidden;
+      height: 280px;
+      width: 440px;
+      margin: 90px auto;
+      border: 5px solid #000;
+      font-size: 18px;
+    }
+
+    .demo1,
+    .demo2 {
+      /* 高度一定要设置为auto */
+      height: auto;
+      width: 100%;
+    }
+
+    .demo1 {
+      background-color: pink;
+    }
+
+    .demo2 {
+      background-color: greenyellow;
+    }
+  </style>
+
+  <body>
+    <div class="demo">
+      <div class="demo1">
+        将进酒<br />
+        君不见黄河之水天上来，奔流到海不复回。<br />
+        君不见高堂明镜悲白发，朝如青丝暮成雪。<br />
+        人生得意须尽欢，莫使金樽空对月。<br />
+        天生我材必有用，千金散尽还复来。<br />
+        烹羊宰牛且为乐，会须一饮三百杯。<br />
+        岑夫子，丹丘生，将进酒，杯莫停。<br />
+        与君歌一曲，请君为我倾耳听。<br />
+        钟鼓馔玉不足贵，但愿长醉不复醒。<br />
+        古来圣贤皆寂寞，惟有饮者留其名。<br />
+        陈王昔时宴平乐，斗酒十千恣欢谑。<br />
+        主人何为言少钱，径须沽取对君酌。<br />
+        五花马、千金裘，呼儿将出换美酒，与尔同销万古愁。<br />
+      </div>
+      <div class="demo2"></div>
+    </div>
+    <script type="text/javascript">
+      scrollUp(80, 'demo', 'demo1', 'demo2')
+
+      // 文字向上滚动
+      function scrollUp(speed = 80, outerClass, innerClass1, innerClass2) {
+        var demo = document.getElementsByClassName(outerClass)[0]
+        var demo1 = document.getElementsByClassName(innerClass1)[0]
+        var demo2 = document.getElementsByClassName(innerClass2)[0]
+        demo2.innerHTML = demo1.innerHTML // 把第一个div中的内容复制到第二个div中
+        function Marquee() {
+          // 文字向上走，竖直方向的滚动条滑块向下滑，所以容器demo的scrollTop应该逐渐变大。
+          // 当demo.scrollTop == demo1.offsetHeight 时，demo1的内容完全滚动完。
+          if (demo.scrollTop >= demo1.offsetHeight) {
+            demo.scrollTop = 0
+          } else {
+            demo.scrollTop = demo.scrollTop + 1
+          }
+        }
+
+        var MyMar = setInterval(Marquee, speed)
+        demo.onmouseover = function () {
+          // 鼠标经过，滚动暂停
+          clearInterval(MyMar)
+        }
+        demo.onmouseout = function () {
+          // 鼠标移出，滚动继续
+          MyMar = setInterval(Marquee, speed)
+        }
+      }
+    </script>
+  </body>
+</html>
