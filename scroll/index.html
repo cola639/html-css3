@@ -40,7 +40,7 @@
       }
 
       .scroll-box {
-        height: 800px;
+        height: 150px;
         width: 100%;
         overflow: hidden;
         position: relative;
@@ -104,28 +104,19 @@
     </div>
 
     <script>
-      var carousel_speed = 15
+      var carousel_speed = 50
       var str1 = ''
       var scrollContent = document.getElementsByClassName('scroll-box').item(0)
       var table = document.getElementsByClassName('scroll-tab').item(0)
-
       var object_table = {
         //模拟数据
         data: [
           { id: 1, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
           { id: 2, pinfan: '合格', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
-          { id: 3, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
-          { id: 4, pinfan: '一般', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
-          { id: 5, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
-          { id: 6, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
-          { id: 7, pinfan: '合格', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
-          { id: 8, pinfan: '合格', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
-          { id: 9, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' },
-          { id: 10, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' }
+          { id: 3, pinfan: '好', kuwei: 23, shuliang: 4342, bumen: '科技部', zhuangtai: '良好', shijian: '2020-12-43' }
         ],
         carousel_speed: carousel_speed
       }
-
       var data12 = {
         data: object_table.data
       }
@@ -149,11 +140,11 @@
           ' </td></tr> '
       }
       //不能使用innerHtml  理论上相当于无限插入 目的是复制数据 使滚动区域高度大于容器高度 实现滚动效果
-      for (let j = 0; j < 10; j++) {
+      for (let j = 0; j < 3; j++) {
         $('.scrollContent').append(str1)
       }
 
-      //滚动函数
+      // 滚动函数
       function roll(t) {
         var timer = setInterval(rollStart, t) // 间隔时间t
         // 鼠标移入table时暂停滚动
