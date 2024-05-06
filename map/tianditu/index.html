@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="天地图" />
+    <title>天地图－地图API－范例－单个标注点沿直线的轨迹运动</title>
+    <script type="text/javascript" src="http://api.tianditu.gov.cn/api?v=4.0&tk=您的密钥"></script>
+    <script src="http://lbs.tianditu.gov.cn/js/lib/jquery/jquery-1.7.2.min.js"></script>
+    <script src="http://lbs.tianditu.gov.cn/js/lib/d3/d3.min.js" charset="utf-8"></script>
+    <script src="http://lbs.tianditu.gov.cn/api/js4.0/opensource/openlibrary/D3SvgOverlay.js"></script>
+    <script src="http://lbs.tianditu.gov.cn/api/js4.0/opensource/openlibrary/CarTrack.js"></script>
+    <style type="text/css">
+      body,
+      html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: '微软雅黑';
+      }
+      #mapDiv {
+        height: 400px;
+        width: 100%;
+      }
+      input,
+      p {
+        margin-top: 10px;
+        margin-left: 5px;
+        font-size: 14px;
+      }
+    </style>
+    <script>
+      var map, drivingRoute
+      var zoom = 13
+      var _CarTrack
+      var startIcon = 'http://lbs.tianditu.gov.cn/images/bus/start.png' //起点图标
+      var endIcon = 'http://lbs.tianditu.gov.cn/images/bus/end.png' //终点图标
+      function onLoad() {
+        map = new T.Map('mapDiv')
+        map.centerAndZoom(new T.LngLat(116.40069, 39.89945), zoom)
+        var config = {
+          policy: 0, //驾车策略
+          onSearchComplete: searchResult //检索完成后的回调函数
+        }
+        drivingRoute = new T.DrivingRoute(map, config)
+        searchDrivingRoute()
+      }
+
+      function searchDrivingRoute() {
+        map.clearOverLays()
+        var startLngLat = new T.LngLat(116.35406, 39.90565)
+        var endLngLat = new T.LngLat(116.42813, 39.90355)
+        //驾车路线搜索
+        drivingRoute.search(startLngLat, endLngLat)
+      }
+
+      function createRoute(lnglats, lineColor) {
+        _CarTrack = new T.CarTrack(map, {
+          interval: 20,
+          speed: 10,
+          dynamicLine: true,
+          Datas: lnglats,
+          polylinestyle: { color: '#2C64A7', width: 5, opacity: 0.9 }
+        })
+      }
+
+      //添加起始点
+      function createStartMarker(result) {
+        var startMarker = new T.Marker(result.getStart(), {
+          icon: new T.Icon({
+            iconUrl: startIcon,
+            iconSize: new T.Point(44, 34),
+            iconAnchor: new T.Point(12, 31)
+          })
+        })
+        map.addOverLay(startMarker)
+        var endMarker = new T.Marker(result.getEnd(), {
+          icon: new T.Icon({
+            iconUrl: endIcon,
+            iconSize: new T.Point(44, 34),
+            iconAnchor: new T.Point(12, 31)
+          })
+        })
+        map.addOverLay(endMarker)
+      }
+
+      function searchResult(result) {
+        //添加起始点
+        createStartMarker(result)
+        obj = result
+        //获取方案个数
+        var routes = result.getNumPlans()
+        for (var i = 0; i < routes; i++) {
+          //获得单条驾车方案结果对象
+          var plan = result.getPlan(i)
+          createRoute(plan.getPath())
+        }
+      }
+    </script>
+  </head>
+  <body onLoad="onLoad()">
+    <div id="mapDiv"></div>
+    <p>本例演示单个标注点沿直线的轨迹运动</p>
+    <div>
+      <input type="button" value="开始" onClick="_CarTrack.start();" />
+      <input type="button" value="暂停" onClick="_CarTrack.pause();" />
+      <input type="button" value="结束" onClick="_CarTrack.stop();" />
+    </div>
+  </body>
+</html>
