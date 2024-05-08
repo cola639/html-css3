@@ -13,16 +13,6 @@
         src: url('./alibaba.woff') format('woff');
       }
 
-      /* 兼容更多浏览器引用例子 */
-      @font-face {
-        font-family: 'MyFont_v2';
-        src: url('SOURCEHANSANSCN-REGULAR.eot'), /* IE9+ Compat Modes */
-         url('SOURCEHANSANSCN-REGULAR.eot?#iefix') format('embedded-opentype'),/* IE6-IE8 */
-          url('SOURCEHANSANSCN-REGULAR.woff') format('woff'), /* 所有现代浏览器 */
-          url('SOURCEHANSANSCN-REGULAR.ttf') format('truetype'), /* Safari, Android, iOS */
-          url('SOURCEHANSANSCN-REGULAR.svg#svgFontName') format('svg'); /* Legacy iOS */
-      }
-
       body {
         background-color: #1e1e1e;
       }
@@ -45,10 +35,20 @@
       .my-font {
         font-family: 'MyFont';
       }
+
+      /*进阶 兼容更多浏览器引用例子 */
+      @font-face {
+        font-family: 'MyFont_v2';
+        src: url('SOURCEHANSANSCN-REGULAR.eot'), /* IE9+ Compat Modes */
+             url('SOURCEHANSANSCN-REGULAR.eot?#iefix') format('embedded-opentype'),/* IE6-IE8 */
+             url('SOURCEHANSANSCN-REGULAR.woff') format('woff'), /* 所有现代浏览器 */
+             url('SOURCEHANSANSCN-REGULAR.ttf') format('truetype'), /* Safari, Android, iOS */
+             url('SOURCEHANSANSCN-REGULAR.svg#svgFontName') format('svg'); /* Legacy iOS */
+      }
     </style>
   </head>
   <body>
-    <div class="box system-font">阿里妈妈</div>
-    <div class="box my-font">阿里妈妈</div>
+    <div class="box system-font">阿里妈妈 普惠商家</div>
+    <div class="box my-font">阿里妈妈 普惠商家</div>
   </body>
 </html>
