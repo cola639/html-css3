@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- prettier-ignore -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Import a font demo</title>
+    <style>
+      /* 本项目例子 */
+      @font-face {
+        font-family: 'MyFont';
+        src: url('./alibaba.woff') format('woff');
+      }
+
+      /* 兼容更多浏览器引用例子 */
+      @font-face {
+        font-family: 'MyFont_v2';
+        src: url('SOURCEHANSANSCN-REGULAR.eot'), /* IE9+ Compat Modes */
+         url('SOURCEHANSANSCN-REGULAR.eot?#iefix') format('embedded-opentype'),/* IE6-IE8 */
+          url('SOURCEHANSANSCN-REGULAR.woff') format('woff'), /* 所有现代浏览器 */
+          url('SOURCEHANSANSCN-REGULAR.ttf') format('truetype'), /* Safari, Android, iOS */
+          url('SOURCEHANSANSCN-REGULAR.svg#svgFontName') format('svg'); /* Legacy iOS */
+      }
+
+      body {
+        background-color: #1e1e1e;
+      }
+
+      .box {
+        width: 300px;
+        height: 300px;
+        line-height: 300px;
+        font-size: 30px;
+        text-align: center;
+        background-color: #fff;
+        color: #333;
+        margin-top: 10px;
+      }
+
+      .system-font {
+        font-family: 'sans-serif';
+      }
+
+      .my-font {
+        font-family: 'MyFont';
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box system-font">阿里妈妈</div>
+    <div class="box my-font">阿里妈妈</div>
+  </body>
+</html>
