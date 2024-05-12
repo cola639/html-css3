@@ -26,52 +26,41 @@
   </head>
   <body>
     <div class="overlay" id="overlay"></div>
-    <div
-      id="featureA"
-      style="position: relative; margin: 50px"
-      onclick="showNextTooltip(1)"
-    >
+    <div id="featureA" style="position: relative; margin: 50px" onclick="showNextTooltip(1)">
       功能A入口
-      <span class="tooltip" id="tooltipA" style="top: -30px; left: 0"
-        >这是新功能A</span
-      >
+      <span class="tooltip" id="tooltipA" style="top: -30px; left: 0">这是新功能A</span>
     </div>
-    <div
-      id="featureB"
-      style="position: relative; margin: 50px"
-      onclick="showNextTooltip(2)"
-    >
+    <div id="featureB" style="position: relative; margin: 50px" onclick="showNextTooltip(2)">
       功能B入口
-      <span class="tooltip" id="tooltipB" style="top: -30px; left: 0"
-        >这是新功能B</span
-      >
+      <span class="tooltip" id="tooltipB" style="top: -30px; left: 0">这是新功能B</span>
     </div>
 
     <script>
       let currentTooltip = 0
+      const delay = 2 * 1000
 
       function showNextTooltip(num) {
         if (num === 1) {
-          document.getElementById("tooltipA").style.display = "none"
-          document.getElementById("tooltipB").style.display = "block"
+          document.getElementById('tooltipA').style.display = 'none'
+          document.getElementById('tooltipB').style.display = 'block'
           currentTooltip = 1
         } else if (num === 2) {
-          document.getElementById("tooltipB").style.display = "none"
+          document.getElementById('tooltipB').style.display = 'none'
           currentTooltip = 2
 
           // 移除 overlay
-          document.getElementById("overlay").style.display = "none"
+          document.getElementById('overlay').style.display = 'none'
         }
       }
 
       window.onload = function () {
-        document.getElementById("tooltipA").style.display = "block"
+        document.getElementById('tooltipA').style.display = 'block'
 
         setTimeout(() => {
           if (currentTooltip === 0) {
             showNextTooltip(1)
           }
-        }, 6000)
+        }, delay)
       }
     </script>
   </body>
