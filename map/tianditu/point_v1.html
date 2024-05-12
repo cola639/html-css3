@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="keywords" content="天地图" />
-    <title>天地图－地图API－范例－自定义标注图片</title>
+    <title>天地图－地图API－范例－画线</title>
     <script type="text/javascript" src="http://api.tianditu.gov.cn/api?v=4.0&tk=0d2194d6188f9f72ea313fba7a360dd4"></script>
     <style type="text/css">
       body,
@@ -25,30 +25,47 @@
       }
     </style>
     <script>
-      var map
-      var zoom = 12
       function onLoad() {
+        // 缩放大小
+        const zoom = 12
         //初始化地图对象
-        map = new T.Map('mapDiv')
+        const map = new window.T.Map('mapDiv')
         //设置显示地图的中心点和级别
-        map.centerAndZoom(new T.LngLat(116.40969, 39.89945), zoom)
+        map.centerAndZoom(new window.T.LngLat(116.40969, 39.9494), zoom)
+        const points = []
+        points.push(new window.T.LngLat(116.41239, 39.97569))
+        points.push(new window.T.LngLat(116.412799, 39.9068))
+        points.push(new window.T.LngLat(116.3297, 39.9294))
+        points.push(new window.T.LngLat(116.38544, 39.9061))
+        //创建线对象
+        const line = new window.T.Polyline(points)
+        //向地图上添加线
+        map.addOverLay(line)
 
         //创建图片对象
-        var icon = new T.Icon({
+        const icon = new window.T.Icon({
           iconUrl: 'http://api.tianditu.gov.cn/img/map/markerA.png',
-          iconSize: new T.Point(19, 27),
-          iconAnchor: new T.Point(10, 25)
+          iconSize: new window.T.Point(19, 27),
+          iconAnchor: new window.T.Point(10, 25)
         })
         //向地图上添加自定义标注
-        var marker1 = new T.Marker(new T.LngLat(116.411794, 39.9068), { icon: icon })
-        var marker2 = new T.Marker(new T.LngLat(116.40969, 39.89945), { icon: icon })
+        const marker1 = new window.T.Marker(new window.T.LngLat(116.41239, 39.97569), { icon: icon })
+        const marker2 = new window.T.Marker(new window.T.LngLat(116.412799, 39.9068), { icon: icon })
+        const marker3 = new window.T.Marker(new window.T.LngLat(116.3297, 39.9294), { icon: icon })
+        const marker4 = new window.T.Marker(new window.T.LngLat(116.38544, 39.9061), { icon: icon })
         map.addOverLay(marker1)
         map.addOverLay(marker2)
+        map.addOverLay(marker3)
+        map.addOverLay(marker4)
       }
     </script>
   </head>
   <body onLoad="onLoad()">
     <div id="mapDiv"></div>
-    <p>本示例演示如何自定义标注图片。</p>
+    <p>本示例演示如何启动和禁止线的编辑功能。</p>
+    <div>
+      <input type="button" value="启动编辑" onclick="line.enableEdit();" />
+      <input type="button" value="禁止编辑" onclick="line.disableEdit();" />
+    </div>
   </body>
 </html>

@@ -10,7 +10,8 @@
       /* 本项目例子 */
       @font-face {
         font-family: 'MyFont';
-        src: url('./alibaba.woff') format('woff');
+        /* woff兼容性更好 woff2体积小 性能好 */
+        src: url('./alibaba.woff') format('woff'); 
       }
 
       body {
