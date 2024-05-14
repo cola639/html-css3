@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: #000;
+      }
+      .neon {
+        color: #cce7f8;
+        font-size: 2.5rem;
+        -webkit-animation: shining 0.5s alternate infinite;
+        animation: shining 0.5s alternate infinite;
+      }
+      @keyframes shining {
+        from {
+          text-shadow: 0 0 10px lightblue, 0 0 20px lightblue, 0 0 30px lightblue, 0 0 40px skyblue, 0 0 50px skyblue, 0 0 60px skyblue;
+        }
+
+        to {
+          text-shadow: 0 0 5px lightblue, 0 0 10px lightblue, 0 0 15px lightblue, 0 0 20px skyblue, 0 0 25px skyblue, 0 0 30px skyblue;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="neon">文字发光</div>
+  </body>
+</html>

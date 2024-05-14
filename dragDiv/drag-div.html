@@ -7,31 +7,20 @@
     <title>drag-div</title>
   </head>
   <body>
-    <div
-      id="box"
-      style="
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        background-color: '#ee735c';
-        border: 1px solid #999;
-      "
-    >
-      drag-div
-    </div>
+    <div id="box" style="position: absolute; width: 100px; height: 100px; background-color: '#ee735c'; border: 1px solid #999">drag-div</div>
   </body>
   <script>
-    var oDiv = document.getElementById('box')
-    oDiv.onmousedown = function (e) {
-      var disX = e.clientX - oDiv.offsetLeft
-      var disY = e.clientY - oDiv.offsetTop
+    const divEle = document.getElementById('box')
+    divEle.onmousedown = function (e) {
+      const disX = e.clientX - divEle.offsetLeft
+      const disY = e.clientY - divEle.offsetTop
 
       document.onmousemove = function (e) {
-        var l = e.clientX - disX
-        var t = e.clientY - disY
+        const l = e.clientX - disX
+        const t = e.clientY - disY
 
-        oDiv.style.left = l + 'px'
-        oDiv.style.top = t + 'px'
+        divEle.style.left = l + 'px'
+        divEle.style.top = t + 'px'
       }
       document.onmouseup = function () {
         document.onmousemove = null
