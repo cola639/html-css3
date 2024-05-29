@@ -31,6 +31,15 @@
       var localsearch
       var radius = 5000
       var infoWin
+      const info = {
+        name: '黄志能',
+        reason: '规定时间内报到',
+        time: '2024-05-17 10:07:05',
+        address: '广东省珠海市香洲区翠香路122号',
+        longitude: 113.5790094314,
+        latitude: 22.2885748637
+      }
+
       function onLoad() {
         center = new T.LngLat(116.63072, 40.054952)
         //初始化地图对象
@@ -42,26 +51,38 @@
         marker = new T.Marker(center) // 创建标注
         map.addOverLay(marker)
         var infoWin1 = new T.InfoWindow()
-        var sContent =
-          "<div style='margin:0px;'>" +
-          "<div style='margin:10px 10px; '>" +
-          "<img style='float:left;margin:0px 10px' src='http://lbs.tianditu.gov.cn/images/logo.png' width='101' height='49' title='天安门'/>" +
-          "<div style='margin:10px 0px 10px 120px;'>电话 : (010)88187700 <br>地址：北京市顺义区机场东路国门商务区地理信息产业园2号楼天地图大厦" +
-          '</div>' +
-          "<input  id='keyWord' value='机场' type='text' style='border: 1px solid #cccccc;width: 180px;height: 20px;line-height: 20px;padding-left: 10px;display: block;float: left;'>" +
-          "<input style='margin-left:195px;  width: 80px;height: 24px; text-align: center; background: #5596de;color: #FFF;border: none;display: block;cursor: pointer;' type='button' value='周边搜索'  onClick=\"localsearch.searchNearby(document.getElementById('keyWord').value,center,radius)\">" +
-          '</div>' +
-          '</div>'
-        infoWin1.setContent(sContent)
-        marker.addEventListener('click', function () {
-          marker.openInfoWindow(infoWin1)
-        }) // 将标注添加到地图中
-        var config = {
-          pageCapacity: 10, //每页显示的数量
-          onSearchComplete: localSearchResult //接收数据的回调函数
+
+        const info = {
+          name: '黄志能',
+          reason: '规定时间内报到',
+          time: '2024-05-17 10:07:05',
+          address: '广东省珠海市香洲区翠香路122号',
+          longitude: 113.5790094314,
+          latitude: 22.2885748637
         }
-        //创建搜索对象
-        localsearch = new T.LocalSearch(map, config)
+        const sContent = `
+                        <div style='margin:0px;'>
+                          <div style='margin:10px 10px;'>
+                            <div style='margin:10px 10px 10px 10px;'>
+                              电话 : ${info.name} <br>
+                              地址：${info.address} <br>
+                              报道时间：${info.time} <br>
+                              报道类型：${info.reason}
+                            </div>
+                          </div>
+                        </div>
+                      `
+        infoWin1.setContent(sContent)
+        marker.openInfoWindow(infoWin1)
+        // marker.addEventListener('click', function () {
+        //   marker.openInfoWindow(infoWin1)
+        // }) // 将标注添加到地图中
+        // var config = {
+        //   pageCapacity: 10, //每页显示的数量
+        //   onSearchComplete: localSearchResult //接收数据的回调函数
+        // }
+        // //创建搜索对象
+        // localsearch = new T.LocalSearch(map, config)
       }
 
       function localSearchResult(result) {
