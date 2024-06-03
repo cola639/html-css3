@@ -15,10 +15,10 @@
         <h1 class="title">Type your username</h1>
         <form id="usernameForm" name="usernameForm">
           <div class="form-group">
-            <input type="text" id="name" placeholder="username" autocomplete="off" class="form-control" />
+            <input type="text" id="name" placeholder="customer" autocomplete="off" class="form-control" />
           </div>
           <div class="form-group">
-            <input type="text" id="role" placeholder="role" autocomplete="off" class="form-control" />
+            <input type="text" id="role" placeholder="role" autocomplete="off" class="form-control" value="1" />
           </div>
           <div class="form-group">
             <button type="submit" class="accent username-submit">Start Chatting</button>
@@ -43,10 +43,14 @@
           </div>
         </form>
       </div>
+
+      <div class="chat-queue">
+        <div class="chat-queue-item">用户1</div>
+      </div>
     </div>
 
     <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
     <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
-    <script src="./main.js"></script>
+    <script src="./customer.js"></script>
   </body>
 </html>

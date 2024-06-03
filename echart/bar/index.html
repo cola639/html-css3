@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--  要确认echarts.js所在的路径是正确的 -->
+    <script type="text/javascript" src="../echarts.js"></script>
+    <!-- 外部url引入 -->
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.js"></script> -->
+    <title></title>
+  </head>
+  <body>
+    <style type="text/css">
+      #demo {
+        /* 必须设置宽高*/
+        width: 800px;
+        height: 400px;
+      }
+    </style>
+    <div id="demo"></div>
+  </body>
+  <script type="text/javascript">
+    let ecDemo = echarts.init(document.getElementById('demo'))
+    const color1 = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: '#afd8f8' },
+      { offset: 1, color: '#fefefe' }
+    ])
+    const color2 = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: '#f6bd0f' },
+      { offset: 1, color: '#fefefe' }
+    ])
+    const color3 = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: '#8bba00' },
+      { offset: 1, color: '#fefefe' }
+    ])
+    let option = {
+      color: ['#afd8f8', '#f6bd0f', '#8bba00'],
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        data: ['民事案件', '刑事案件', '行政案件'],
+        bottom: 20
+      },
+
+      xAxis: [
+        {
+          type: 'category',
+          axisTick: { show: false },
+          data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+        }
+      ],
+      yAxis: {
+        type: 'value',
+        splitArea: {
+          show: true,
+          areaStyle: {
+            color: ['#ffffff', '#f7f7f7']
+          }
+        }
+      },
+      series: [
+        {
+          name: '民事案件',
+          type: 'bar',
+          barGap: 0,
+          emphasis: {
+            focus: 'series'
+          },
+          data: [320, 332, 301, 334, 390, 320, 332, 301, 390, 320, 332, 301]
+        },
+        {
+          name: '刑事案件',
+          type: 'bar',
+          emphasis: {
+            focus: 'series'
+          },
+          data: [220, 182, 191, 234, 220, 182, 191, 234, 220, 182, 191, 234]
+        },
+        {
+          name: '行政案件',
+          type: 'bar',
+          emphasis: {
+            focus: 'series'
+          },
+          data: [150, 232, 201, 154, 190]
+        }
+      ]
+    }
+
+    ecDemo.setOption(option)
+  </script>
+</html>

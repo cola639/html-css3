@@ -10,30 +10,39 @@ var connectingElement = document.querySelector('.connecting')
 
 var stompClient = null
 var username = null
+var role = null
 
 var colors = ['#2196F3', '#32c787', '#00BCD4', '#ff5652', '#ffc107', '#ff85af', '#FF9800', '#39bbb0']
 
 function connect(event) {
+  event.preventDefault()
   username = document.querySelector('#name').value.trim()
+  role = document.querySelector('#role').value.trim()
 
   if (username) {
     usernamePage.classList.add('hidden')
     chatPage.classList.remove('hidden')
 
-    var socket = new SockJS('/ws')
+    var socket = new SockJS('http://localhost:8989/ws')
     stompClient = Stomp.over(socket)
 
     stompClient.connect({}, onConnected, onError)
   }
-  event.preventDefault()
 }
 
 function onConnected() {
   // Subscribe to the Public Topic
-  stompClient.subscribe('/topic/public', onMessageReceived)
+  // stompClient.subscribe('/topic/public', onMessageReceived)
 
+  // 好像url已经有uuid了
   // Tell your username to the server
-  stompClient.send('/app/chat.addUser', {}, JSON.stringify({ sender: username, type: 'JOIN' }))
+  //  stompClient.send('/app/chat.addUser', {}, JSON.stringify({ sender: username, type: 'JOIN' }))
+
+  // Tell your customer name to the server
+  stompClient.send('/app/chat.addCustomer', {}, JSON.stringify({ sender: username, type: 'JOIN' }))
+
+  // 客服订阅分配用户通信频道
+  stompClient.subscribe('/app/chat.queue', onAssign)
 
   connectingElement.classList.add('hidden')
 }
@@ -94,6 +103,15 @@ function onMessageReceived(payload) {
 
   messageArea.appendChild(messageElement)
   messageArea.scrollTop = messageArea.scrollHeight
+}
+
+function onAssign(payload) {
+  // 生成对应服务用户列表
+  var message = JSON.parse(payload.body)
+  console.log(message)
+
+  // 订阅接受用户频道
+  stompClient.subscribe(`/topic/public/${payload}`, onMessageReceived)
 }
 
 function getAvatarColor(messageSender) {
