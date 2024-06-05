@@ -42,7 +42,8 @@ function onConnected() {
   stompClient.send('/app/chat.addCustomer', {}, JSON.stringify({ sender: username, type: 'JOIN' }))
 
   // 客服订阅分配用户通信频道
-  stompClient.subscribe('/app/chat.queue', onAssign)
+  // stompClient.subscribe('/app/chat.queue', onAssign)
+  stompClient.subscribe('/topic/public', onAssign)
 
   connectingElement.classList.add('hidden')
 }
@@ -106,12 +107,13 @@ function onMessageReceived(payload) {
 }
 
 function onAssign(payload) {
+  console.log('onAssign message')
   // 生成对应服务用户列表
-  var message = JSON.parse(payload.body)
-  console.log(message)
+  var message = JSON.parse(payload.body) // 约定JSON数据传输
+  console.log('onAssign message', message)
 
   // 订阅接受用户频道
-  stompClient.subscribe(`/topic/public/${payload}`, onMessageReceived)
+  //stompClient.subscribe(`/topic/public/${payload}`, onMessageReceived)
 }
 
 function getAvatarColor(messageSender) {
