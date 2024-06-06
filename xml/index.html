@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./fxp.min.js"></script>
+
+    <!-- <script>
+      const xmlContent = 
+      setTimeout(() => {
+        console.log(window)
+        const parser = new fxp.XMLParser()
+        const xmlContent = ''
+        const content = parser.parse(xmlContent)
+        console.log(content)
+      }, 2000)
+    </script> -->
+
+    <script>
+      // Fetch the content of the XML file
+      fetch('./content.xml')
+        .then(response => response.text())
+        .then(xmlContent => {
+          // Log the XML content
+          console.log('XML Content:', xmlContent)
+
+          // Parse the XML content
+          console.log(window.fxp)
+          const parser = new fxp.XMLParser()
+          const content = parser.parse(xmlContent)
+
+          // Log the parsed content
+          console.log('Parsed Content:', content)
+        })
+        .catch(error => {
+          console.error('Error fetching the XML file:', error)
+        })
+    </script>
+
+    <script>
+      window.onload = function () {
+        // Fetch the content of the XML file
+        fetch('./content.xml')
+          .then(response => response.text())
+          .then(xmlContent => {
+            // Log the XML content
+            console.log('XML Content:', xmlContent)
+
+            // Parse the XML content
+            const options = {
+              ignoreAttributes: false,
+              attributeNamePrefix: '',
+              parseAttributeValue: true
+            }
+            const parser = new fxp.XMLParser(options)
+            const jsonObj = parser.parse(xmlContent)
+
+            // Log the parsed content
+            console.log('Parsed Content:', jsonObj)
+
+            // Extract label and value
+            const sets = jsonObj.chart.set
+            sets.forEach(set => {
+              console.log(`Label: ${set.label}, Value: ${set.value}`)
+            })
+          })
+          .catch(error => {
+            console.error('Error fetching the XML file:', error)
+          })
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Check Global Variables</title>
+  </head>
+  <body>
+    <script>
+      // Capture the initial state of the window object
+      const initialWindowProps = Object.keys(window)
+
+      // Function to compare the initial state with the current state
+      function compareWindowProps() {
+        const currentWindowProps = Object.keys(window)
+        const newProps = currentWindowProps.filter(prop => !initialWindowProps.includes(prop))
+        console.log('New global variables after loading fxp.min.js:', newProps)
+      }
+    </script>
+
+    <!-- Load the fxp.min.js script -->
+    <script src="./fxp.min.js"></script>
+
+    <script>
+      // Ensure the script is loaded before comparing the window properties
+      window.onload = () => {
+        compareWindowProps()
+      }
+    </script>
+  </body>
+</html>
