@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./fxp.min.js"></script>
+
+    <script>
+      // Fetch the content of the XML file
+      fetch('./content.xml')
+        .then(response => response.text())
+        .then(xmlContent => {
+          // Log the XML content
+          console.log('XML Content:', xmlContent)
+
+          // Parse the XML content
+          const parser = new fxpParser.XMLParser()
+          const content = parser.parse(xmlContent)
+
+          // Log the parsed content
+          console.log('Parsed Content:', content)
+        })
+        .catch(error => {
+          console.error('Error fetching the XML file:', error)
+        })
+    </script>
+  </head>
+  <body></body>
+</html>

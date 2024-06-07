@@ -20,24 +20,12 @@
 
     <!-- Load the fxp.min.js script -->
     <script src="./fxp.min.js"></script>
-    <script src="./xml-js.js"></script>
 
     <script>
-      var xml =
-        '<?xml version="1.0" encoding="utf-8"?>' +
-        '<note importance="high" logged="true">' +
-        '    <title>Happy</title>' +
-        '    <todo>Work</todo>' +
-        '    <todo>Play</todo>' +
-        '</note>'
-
       // Ensure the script is loaded before comparing the window properties
       window.onload = () => {
         compareWindowProps()
       }
-
-      const convert = window.xml2json(xml)
-      console.log('🚀 >> convert:', convert)
     </script>
   </body>
 </html>
