@@ -21,18 +21,6 @@
   </body>
   <script type="text/javascript">
     let ecDemo = echarts.init(document.getElementById('demo'))
-    const color1 = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      { offset: 0, color: '#afd8f8' },
-      { offset: 1, color: '#fefefe' }
-    ])
-    const color2 = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      { offset: 0, color: '#f6bd0f' },
-      { offset: 1, color: '#fefefe' }
-    ])
-    const color3 = new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-      { offset: 0, color: '#8bba00' },
-      { offset: 1, color: '#fefefe' }
-    ])
     let option = {
       color: ['#afd8f8', '#f6bd0f', '#8bba00'],
       tooltip: {
@@ -43,7 +31,8 @@
       },
       legend: {
         data: ['民事案件', '刑事案件', '行政案件'],
-        bottom: 20
+        bottom: 0,
+        itemGap: 20
       },
 
       xAxis: [

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<chart anchorRadius="5" baseFontSize="14" bgColor="#FFFFFF" canvasBgColor="#FFFFFF" canvasBorderAlpha="20" formatNumberScale="0" lineColor="#FFBE5E" rotateYAxisName="0" showAboutMenuItem="0" showBorder="0" showPrintMenuItem="0" showValues="0" yAxisNameWidth="20"><set label="周五" value="8"/><set label="周六" value="0"/><set label="周日" value="0"/><set label="周一" value="0"/><set label="周二" value="0"/><set label="周三" value="1"/><set label="周四" value="4"/><styles><definition>
-<style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/></definition><application><apply styles="CanvasAnim" toObject="Canvas"/></application>
-</styles></chart>

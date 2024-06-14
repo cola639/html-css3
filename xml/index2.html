@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XML to JSON</title>
+    <script src="./fxp.min.js"></script>
+    <script>
+      window.onload = function () {
+        // XML strings in an array
+        const xmlArray = [
+          `<?xml version="1.0" encoding="utf-8"?><chart baseFontSize="12" bgColor="#DDDDDD" canvasBgColor="#FFFFFF" canvasBorderAlpha="1" canvasBorderColor="#EEEEEE" formatNumberScale="0" rotateYAxisName="0" showAboutMenuItem="0" showBorder="0" showPrintMenuItem="0" showValues="0" yAxisNameWidth="20"><categories><category label="1月"/><category label="2月"/><category label="3月"/><category label="4月"/><category label="5月"/><category label="6月"/><category label="7月"/><category label="8月"/><category label="9月"/><category label="10月"/><category label="11月"/><category label="12月"/></categories><dataset seriesName="民事"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><dataset seriesName="刑事"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><dataset seriesName="行政"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><dataset seriesName="投诉"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><styles><definition><style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/></definition><application><apply styles="CanvasAnim" toObject="Canvas"/></application></styles></chart>`,
+          `<?xml version="1.0" encoding="utf-8"?><chart baseFontSize="12" bgColor="#DDDDDD" canvasBgColor="#FFFFFF" canvasBorderAlpha="1" canvasBorderColor="#EEEEEE" formatNumberScale="0" rotateYAxisName="0" showAboutMenuItem="0" showBorder="0" showPrintMenuItem="0" showValues="0" yAxisNameWidth="20"><categories><category label="1月"/><category label="2月"/><category label="3月"/><category label="4月"/><category label="5月"/><category label="6月"/><category label="7月"/><category label="8月"/><category label="9月"/><category label="10月"/><category label="11月"/><category label="12月"/></categories><dataset seriesName="民事案件"><set value="0"/><set value="0"/><set value="1"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><dataset seriesName="刑事案件"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><dataset seriesName="行政案件"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><styles><definition><style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/></definition><application><apply styles="CanvasAnim" toObject="Canvas"/></application></styles></chart>`
+        ]
+
+        // Define function to process XML content
+        function processXML(xmlContent) {
+          var options = {
+            ignoreAttributes: false,
+            attributeNamePrefix: '',
+            parseAttributeValue: true
+          }
+          var parser = new fxp.XMLParser(options)
+          var jsonObj = parser.parse(xmlContent)
+
+          // Initialize data structure
+          var data = {
+            months: [],
+            category: ['民事案件', '刑事案件', '行政案件'],
+            civil: [], // 民事案件
+            criminal: [], // 刑事案件
+            admin: [] // 行政案件
+            //  complaint: []
+          }
+
+          // Extract months (categories)
+          if (jsonObj.chart.categories && jsonObj.chart.categories.category) {
+            for (var i = 0; i < jsonObj.chart.categories.category.length; i++) {
+              var cat = jsonObj.chart.categories.category[i]
+              data.months.push(cat.label)
+            }
+          }
+
+          // Extract dataset values
+          if (jsonObj.chart.dataset) {
+            for (var j = 0; j < jsonObj.chart.dataset.length; j++) {
+              var set = jsonObj.chart.dataset[j]
+              switch (set.seriesName) {
+                case '民事案件':
+                  for (var k = 0; k < set.set.length; k++) {
+                    var item = set.set[k]
+                    data.civil.push(item.value)
+                  }
+                  break
+                case '刑事案件':
+                  for (var l = 0; l < set.set.length; l++) {
+                    var item = set.set[l]
+                    data.criminal.push(item.value)
+                  }
+                  break
+                case '行政案件':
+                  for (var m = 0; m < set.set.length; m++) {
+                    var item = set.set[m]
+                    data.admin.push(item.value)
+                  }
+                  break
+              }
+            }
+          }
+
+          return data
+        }
+
+        // Process each XML string and log the results
+        const result = processXML(xmlArray[1])
+        console.log('Extracted Result:', result)
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

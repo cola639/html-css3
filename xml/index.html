@@ -62,9 +62,14 @@
 
             // Extract label and value
             const sets = jsonObj.chart.set
+            const weekends = []
+            const weekendsData = []
+            console.log('🚀 >> sets:', sets)
             sets.forEach(set => {
-              console.log(`Label: ${set.label}, Value: ${set.value}`)
+              weekends.push(set.label)
+              weekendsData.push(set.value)
             })
+            console.log('weekends weekendsData -->', weekends, weekendsData)
           })
           .catch(error => {
             console.error('Error fetching the XML file:', error)

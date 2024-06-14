@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IFRAME</title>
+    <style>
+      *,
+      *:after,
+      *:before {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: rgba(230, 238, 249, 0.5);
+      }
+
+      .btn {
+        cursor: pointer;
+        width: 60px;
+        height: 30px;
+        line-height: 30px;
+        color: #333;
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap !important;
+        word-wrap: normal !important;
+        word-break: keep-all !important;
+        background-image: -moz-linear-gradient(top, #fff, #e6e6e6);
+        background-image: -webkit-linear-gradient(top, #fff, #e6e6e6);
+      }
+
+      .btn:hover {
+        color: #3372ff;
+        vertical-align: middle;
+        font-size: 12px !important;
+        text-align: center;
+        white-space: nowrap !important;
+        word-wrap: normal !important;
+        word-break: keep-all !important;
+        white-space: nowrap !important;
+        font-weight: bold;
+        border-top: 2px solid #3372ff;
+        background-image: -moz-linear-gradient(top, #e6e6e6, #fff);
+        background-image: -webkit-linear-gradient(top, #e6e6e6, #fff);
+        background-image: -o-linear-gradient(top, #e6e6e6, #fff);
+      }
+
+      .btn.active {
+        color: #3372ff;
+        vertical-align: middle;
+        font-size: 12px !important;
+        text-align: center;
+        white-space: nowrap !important;
+        word-wrap: normal !important;
+        word-break: keep-all !important;
+        white-space: nowrap !important;
+        font-weight: bold;
+        border-top: 2px solid #3372ff;
+        background-image: -moz-linear-gradient(top, #e6e6e6, #fff);
+        background-image: -webkit-linear-gradient(top, #e6e6e6, #fff);
+      }
+
+      .iframe {
+        width: 300px;
+        height: 300px;
+        margin-top: 6px;
+      }
+    </style>
+
+    <script>
+      window.onload = function () {
+        var buttons = document.querySelectorAll('.btn')
+        var iframe = document.getElementById('inlineFrameExample')
+
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].addEventListener(
+            'click',
+            (function (button) {
+              return function () {
+                // 移除所有按钮的 active 类
+                for (var j = 0; j < buttons.length; j++) {
+                  buttons[j].classList.remove('active')
+                }
+                // 为当前按钮添加 active 类
+                button.classList.add('active')
+                // 更改 iframe 的 src 属性
+                iframe.src = button.getAttribute('data-src')
+              }
+            })(buttons[i])
+          )
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="tabs">
+        <button
+          class="btn tab1 active"
+          data-src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik"
+        >
+          切换1
+        </button>
+        <button
+          class="btn tab2"
+          data-src="https://www.openstreetmap.org/export/embed.html?bbox=0.004017949104309083%2C51.47612752641776%2C0.00830577182769775396%2C51.478569861898606&layer=mapnik"
+        >
+          切换2
+        </button>
+      </div>
+    </div>
+
+    <iframe
+      class="iframe"
+      id="inlineFrameExample"
+      title="Inline Frame Example"
+      frameborder="0"
+      src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik"
+    >
+    </iframe>
+  </body>
+</html>

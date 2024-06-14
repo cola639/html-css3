@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XML to JSON</title>
+    <script src="./fxp.min.js"></script>
+    <script>
+      window.onload = function () {
+        const xmlContent = `<?xml version="1.0" encoding="utf-8"?>
+<chart baseFontSize="12" bgColor="#F4F6F9" canvasBgColor="#FFFFFF" caption="案件受理统计" showAboutMenuItem="0" showPrintMenuItem="0"><set label="民事" value="1"/><set label="刑事" value="0"/><set label="行政" value="0"/><styles><definition><style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/></definition><application><apply styles="CanvasAnim" toObject="Canvas"/></application></styles></chart>`
+
+        // Process each XML string and log the results
+        const result = processXML(xmlContent)
+      }
+
+      // Define function to process XML content
+      function processXML(xmlContent) {
+        var options = {
+          ignoreAttributes: false,
+          attributeNamePrefix: '',
+          parseAttributeValue: true
+        }
+        var parser = new fxp.XMLParser(options)
+        var jsonObj = parser.parse(xmlContent)
+        console.log('🚀 >> processXML >> jsonObj:', jsonObj, jsonObj.chart.set)
+
+        var obj = {
+          title: jsonObj.chart.caption,
+          pieArr: []
+        }
+        var set = jsonObj.chart.set
+        for (var i = 0; i < set.length; i++) {
+          obj.pieArr.push({
+            name: set[i].label,
+            value: set[i].value
+          })
+        }
+
+        console.log('🚀 >> processXML >> obj:', obj)
+        return obj
+      }
+    </script>
+  </head>
+  <body></body>
+</html>
