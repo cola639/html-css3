@@ -24,10 +24,11 @@
     let ecDemo = echarts.init(document.getElementById('demo'))
     const title = '受理条件'
     const pieArr = [
-      { name: '民事', value: 1 },
-      { name: '民事', value: 1 },
-      { name: '民事', value: 1 }
+      { name: '民事', value: 5 },
+      { name: '行政', value: 13 },
+      { name: '刑事', value: 11 }
     ]
+    const colorList = ['#badbf9', '#96be00', '#eec000']
 
     var option = {
       title: {
@@ -46,6 +47,7 @@
           name: '',
           type: 'pie',
           radius: '50%',
+          color: colorList,
           data: pieArr,
           label: {
             formatter: function (data) {

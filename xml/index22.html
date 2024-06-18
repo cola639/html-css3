@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 要确认echarts.js所在的路径是正确的 -->
+    <script type="text/javascript" src="./echarts.js"></script>
+    <title></title>
+    <script src="./fxp.min.js"></script>
+  </head>
+  <body>
+    <style type="text/css">
+      #demo {
+        /* 必须设置宽高 */
+        width: 1500px;
+        height: 500px;
+      }
+    </style>
+    <div id="demo"></div>
+  </body>
+  <script>
+    function processXML(xmlContent) {
+      var options = {
+        ignoreAttributes: false,
+        attributeNamePrefix: '',
+        parseAttributeValue: true
+      }
+
+      const colorlist = [
+        '#99afc3',
+        '#d4b74b',
+        '#91ab36',
+        '#c38658',
+        '#6fb0b0',
+        '#d48f8f',
+        '#aa85ae',
+        '#99ae7b',
+        '#beba53',
+        '#85bee1',
+        '#9f4448',
+        '#c3b7d3',
+        '#cf9f68',
+        '#e5c9a3',
+        '#c8c573',
+        '#e6a9b3'
+      ]
+      var parser = new fxp.XMLParser(options)
+      var jsonObj = parser.parse(xmlContent)
+      var obj = {
+        title: jsonObj.chart.caption,
+        category: [],
+        items: []
+      }
+      var set = jsonObj.chart.set
+      for (var i = 0; i < set.length; i++) {
+        obj.category.push(set[i].label)
+        obj.items.push({
+          value: set[i].value,
+          itemStyle: {
+            color: colorlist[i]
+          }
+        })
+      }
+
+      return obj
+    }
+  </script>
+
+  <script type="text/javascript">
+    const xml = `<?xml version="1.0" encoding="utf-8"?>
+    <chart baseFontSize="12" bgColor="#F4F6F9" canvasBgColor="#FFFFFF" caption="受援人情况统计" showAboutMenuItem="0" showPrintMenuItem="0">
+      <set label="外来务工人员" value="1"/>
+      <set label="农民" value="0"/>
+      <set label="盲聋哑" value="0"/>
+      <set label="盲聋哑之外的残疾人" value="0"/>
+      <set label="老年人" value="0"/>
+      <set label="未成年人" value="0"/>
+      <set label="少数民族" value="0"/>
+      <set label="军人军属" value="0"/>
+      <set label="外国人或无国籍人" value="0"/>
+      <set label="共同犯罪案件中的犯罪嫌疑人或被告人" value="0"/>
+      <set label="刑事被害人" value="0"/>
+      <set label="可能判处无期徒刑或死刑" value="0"/>
+      <set label="其他" value="0"/>
+      <set label="农民工" value="0"/>
+      <set label="妇女" value="0"/>
+      <set label="尚未完全丧失辨认或控制自己行为能力的精神病人" value="0"/>
+      <styles>
+        <definition>
+          <style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/>
+        </definition>
+        <application>
+          <apply styles="CanvasAnim" toObject="Canvas"/>
+        </application>
+      </styles>
+    </chart>`
+
+    var obj = processXML(xml)
+    var title = obj.title
+    var items = obj.items
+    var category = obj.category
+
+    var ecDemo = echarts.init(document.getElementById('demo'))
+    var option = {
+      title: {
+        text: title,
+        textStyle: {
+          fontSize: 20
+        },
+        left: 'center'
+      },
+
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        show: false
+      },
+
+      xAxis: [
+        {
+          type: 'category',
+          axisTick: { show: false },
+          minInterval: 0,
+          axisLabel: {
+            width: 35,
+            height: 200,
+            overflow: 'break',
+            rotate: -10 // 旋转标签45度
+          },
+          data: category
+        }
+      ],
+      yAxis: {
+        type: 'value',
+        minInterval: 1,
+        splitArea: {
+          show: true,
+          areaStyle: {}
+        }
+      },
+      series: {
+        type: 'bar',
+        data: items
+      }
+    }
+
+    ecDemo.setOption(option)
+  </script>
+</html>
