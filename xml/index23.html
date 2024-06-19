@@ -19,7 +19,7 @@
     <div id="demo"></div>
   </body>
   <script>
-    function processXML(xmlContent) {
+    function processColumn3DXML(xmlContent) {
       var options = {
         ignoreAttributes: false,
         attributeNamePrefix: '',
@@ -68,34 +68,8 @@
 
   <script type="text/javascript">
     const xml = `<?xml version="1.0" encoding="utf-8"?>
-    <chart baseFontSize="12" bgColor="#F4F6F9" canvasBgColor="#FFFFFF" caption="受援人情况统计" showAboutMenuItem="0" showPrintMenuItem="0">
-      <set label="外来务工人员" value="1"/>
-      <set label="农民" value="0"/>
-      <set label="盲聋哑" value="0"/>
-      <set label="盲聋哑之外的残疾人" value="0"/>
-      <set label="老年人" value="0"/>
-      <set label="未成年人" value="0"/>
-      <set label="少数民族" value="0"/>
-      <set label="军人军属" value="0"/>
-      <set label="外国人或无国籍人" value="0"/>
-      <set label="共同犯罪案件中的犯罪嫌疑人或被告人" value="0"/>
-      <set label="刑事被害人" value="0"/>
-      <set label="可能判处无期徒刑或死刑" value="0"/>
-      <set label="其他" value="0"/>
-      <set label="农民工" value="0"/>
-      <set label="妇女" value="0"/>
-      <set label="尚未完全丧失辨认或控制自己行为能力的精神病人" value="0"/>
-      <styles>
-        <definition>
-          <style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/>
-        </definition>
-        <application>
-          <apply styles="CanvasAnim" toObject="Canvas"/>
-        </application>
-      </styles>
-    </chart>`
-
-    var obj = processXML(xml)
+<chart baseFontSize="12" bgColor="#F4F6F9" canvasBgColor="#FFFFFF" caption="民事案件承办情况" showAboutMenuItem="0" showPrintMenuItem="0"><set label="非诉讼" value="1"/><set label="劳动仲裁" value="1"/><set label="诉讼" value="0"/><styles><definition><style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/></definition><application><apply styles="CanvasAnim" toObject="Canvas"/></application></styles></chart>`
+    var obj = processColumn3DXML(xml)
     var title = obj.title
     var items = obj.items
     var category = obj.category
@@ -120,8 +94,8 @@
         show: false
       },
       grid: {
-        x: 0, //左
-        y: 0, //上
+        x: 30, //左
+        y: 50, //上
         x2: 0, //右
         y2: 120 //下
       },
@@ -135,7 +109,7 @@
             interval: 0,
             formatter: function (value) {
               var str = ''
-              var num = 3 //每行显示字数
+              var num = 4 //每行显示字数
               var valLength = value.length //该项x轴字数
               var rowNum = Math.ceil(valLength / num) // 行数
 
@@ -158,6 +132,7 @@
         }
       ],
       yAxis: {
+        // name: '单位：人次',
         type: 'value',
         minInterval: 1,
         splitArea: {
@@ -166,6 +141,10 @@
         }
       },
       series: {
+        label: {
+          show: true,
+          position: 'top'
+        },
         type: 'bar',
         data: items
       }
