@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--  要确认echarts.js所在的路径是正确的 -->
+    <script type="text/javascript" src="./echarts.js"></script>
+    <script src="./fxp.min.js"></script>
+    <!-- 外部url引入 -->
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.js"></script> -->
+    <title></title>
+  </head>
+  <body>
+    <style type="text/css">
+      #demo {
+        /* 必须设置宽高*/
+        width: 1000px;
+        height: 400px;
+      }
+    </style>
+    <div id="demo"></div>
+  </body>
+  <script>
+    function processColumn3DXML(xmlContent) {
+      const options = {
+        ignoreAttributes: false,
+        attributeNamePrefix: '',
+        parseAttributeValue: true
+      }
+
+      const colorlist = [
+        '#99afc3',
+        '#d4b74b',
+        '#91ab36',
+        '#c38658',
+        '#6fb0b0',
+        '#d48f8f',
+        '#aa85ae',
+        '#99ae7b',
+        '#beba53',
+        '#85bee1',
+        '#9f4448',
+        '#c3b7d3',
+        '#cf9f68',
+        '#e5c9a3',
+        '#c8c573',
+        '#e6a9b3'
+      ]
+
+      const parser = new fxp.XMLParser(options)
+      const jsonObj = parser.parse(xmlContent)
+      console.log('🚀 >> processColumn3DXML >> jsonObj :', jsonObj)
+
+      const obj = {
+        title: jsonObj.chart.caption,
+        unitLeft: jsonObj.chart.PYAxisName,
+        unitRight: jsonObj.chart.SYAxisName,
+        legend: [],
+        categories: [],
+        xAxisObj: {}
+      }
+
+      const categories = jsonObj.chart.categories.category || []
+      obj.categories = categories.map(category => category.label)
+
+      const dataset = jsonObj.chart.dataset || []
+      dataset.forEach(data => {
+        obj.legend.push(data.seriesName)
+        const key = data.seriesName
+        const arr = []
+
+        for (let index = 0; index < data.set.length; index++) {
+          arr.push(data.set[index].value)
+        }
+
+        obj.xAxisObj[key] = arr
+      })
+
+      return obj
+    }
+  </script>
+  <script type="text/javascript">
+    const xmlContent = `<?xml version="1.0" encoding="utf-8"?>
+<chart PYAxisName="数量" SYAxisName="同比增长(%)" baseFontSize="12" bgColor="#F4F6F9" canvasBgColor="#FFFFFF" caption="法律咨询数量同比" palette="1" paletteColors="008E8E,FFBB1C,FFD700" showAboutMenuItem="0" showPrintMenuItem="0" showValues="0"><categories><category label="河源市法律援助处"/><category label="河源市源城区法律援助处"/><category label="河源市东源县法律援助处"/><category label="河源市紫金县法律援助处"/><category label="河源市和平县法律援助处"/><category label="河源市连平县法律援助处"/><category label="河源市龙川县法律援助处"/></categories><dataset parentYAxis="P" renderAs="Line" seriesName="去年同期"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><dataset parentYAxis="S" renderAs="Column" seriesName="同比增长（%）"><set value="0.00"/><set value="0.00"/><set value="0.00"/><set value="0.00"/><set value="0.00"/><set value="0.00"/><set value="0.00"/></dataset><dataset parentYAxis="P" renderAs="Line" seriesName="当前统计时间"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><trendlines><line color="91C728" displayValue="Target" showOnTop="1" startValue="26000"/></trendlines><styles><definition><style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/></definition><application><apply styles="CanvasAnim" toObject="Canvas"/></application></styles></chart>`
+
+    var obj = processColumn3DXML(xmlContent)
+    console.log('🚀 >> obj:', obj)
+    var title = obj.title
+    var items = obj.items
+    var category = obj.category
+    var categories = obj.categories
+    var unitLeft = obj.unitLeft
+    var unitRight = obj.unitRight
+    var legend = obj.legend
+    var data1 = obj.xAxisObj['去年同期']
+    var data2 = obj.xAxisObj['同比增长（%）']
+    var data3 = obj.xAxisObj['当前统计时间']
+
+    let ecDemo = echarts.init(document.getElementById('demo'))
+    let option = {
+      title: {
+        text: title,
+        left: 'center'
+      },
+
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          crossStyle: {
+            color: '#999'
+          }
+        }
+      },
+
+      legend: {
+        data: legend,
+        bottom: 0
+      },
+      xAxis: [
+        {
+          type: 'category',
+          data: categories,
+          axisPointer: {
+            type: 'shadow'
+          },
+          axisTick: {
+            show: false
+          },
+          minInterval: 0,
+          axisLabel: {
+            overflow: 'break',
+            interval: 0,
+            formatter: function (value) {
+              var str = ''
+              var num = 8 //每行显示字数
+              var valLength = value.length //该项x轴字数
+              var rowNum = Math.ceil(valLength / num) // 行数
+
+              if (rowNum > 1) {
+                for (var i = 0; i < rowNum; i++) {
+                  var temp = ''
+                  var start = i * num
+                  var end = start + num
+
+                  temp = value.substring(start, end) + '\n'
+                  str += temp
+                }
+                return str
+              } else {
+                return value
+              }
+            }
+          }
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          name: unitLeft,
+          nameLocation: 'middle',
+          nameGap: 60,
+          min: 1,
+          interval: 1,
+          axisLabel: {
+            formatter: '{value}'
+          }
+        },
+        {
+          type: 'value',
+          name: unitRight,
+          nameLocation: 'middle',
+          nameGap: 60,
+          min: 1,
+          axisLabel: {
+            formatter: '{value}'
+          },
+          splitArea: {
+            show: true,
+            areaStyle: {
+              color: '#f2f2f2'
+            }
+          }
+        }
+      ],
+      series: [
+        {
+          name: legend[0],
+          type: 'bar',
+          data: data1,
+          tooltip: {
+            valueFormatter: function (value) {
+              return value + '件'
+            }
+          }
+        },
+        {
+          name: legend[2],
+          type: 'bar',
+          data: data3,
+          tooltip: {
+            valueFormatter: function (value) {
+              return value + '件'
+            }
+          }
+        },
+        {
+          name: legend[1],
+          type: 'line',
+          data: data2,
+          yAxisIndex: 1,
+          tooltip: {
+            valueFormatter: function (value) {
+              return value / 100 + '%'
+            }
+          }
+        }
+      ]
+    }
+
+    ecDemo.setOption(option)
+  </script>
+</html>
