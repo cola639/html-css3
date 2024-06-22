@@ -15,20 +15,20 @@
       #demo {
         /* 必须设置宽高*/
         width: 1000px;
-        height: 400px;
+        height: 500px;
       }
     </style>
     <div id="demo"></div>
   </body>
   <script>
     function processColumn3DXML(xmlContent) {
-      const options = {
+      var options = {
         ignoreAttributes: false,
         attributeNamePrefix: '',
         parseAttributeValue: true
       }
 
-      const colorlist = [
+      var colorlist = [
         '#99afc3',
         '#d4b74b',
         '#91ab36',
@@ -47,11 +47,11 @@
         '#e6a9b3'
       ]
 
-      const parser = new fxp.XMLParser(options)
-      const jsonObj = parser.parse(xmlContent)
+      var parser = new fxp.XMLParser(options)
+      var jsonObj = parser.parse(xmlContent)
       console.log('🚀 >> processColumn3DXML >> jsonObj :', jsonObj)
 
-      const obj = {
+      var obj = {
         title: jsonObj.chart.caption,
         unitLeft: jsonObj.chart.PYAxisName,
         unitRight: jsonObj.chart.SYAxisName,
@@ -60,16 +60,18 @@
         xAxisObj: {}
       }
 
-      const categories = jsonObj.chart.categories.category || []
-      obj.categories = categories.map(category => category.label)
+      var categories = jsonObj.chart.categories.category || []
+      obj.categories = categories.map(function (category) {
+        return category.label
+      })
 
-      const dataset = jsonObj.chart.dataset || []
-      dataset.forEach(data => {
+      var dataset = jsonObj.chart.dataset || []
+      dataset.forEach(function (data) {
         obj.legend.push(data.seriesName)
-        const key = data.seriesName
-        const arr = []
+        var key = data.seriesName
+        var arr = []
 
-        for (let index = 0; index < data.set.length; index++) {
+        for (var index = 0; index < data.set.length; index++) {
           arr.push(data.set[index].value)
         }
 
@@ -79,11 +81,54 @@
       return obj
     }
   </script>
+
   <script type="text/javascript">
-    const xmlContent = `<?xml version="1.0" encoding="utf-8"?>
-<chart PYAxisName="数量" SYAxisName="同比增长(%)" baseFontSize="12" bgColor="#F4F6F9" canvasBgColor="#FFFFFF" caption="法律咨询数量同比" palette="1" paletteColors="008E8E,FFBB1C,FFD700" showAboutMenuItem="0" showPrintMenuItem="0" showValues="0"><categories><category label="河源市法律援助处"/><category label="河源市源城区法律援助处"/><category label="河源市东源县法律援助处"/><category label="河源市紫金县法律援助处"/><category label="河源市和平县法律援助处"/><category label="河源市连平县法律援助处"/><category label="河源市龙川县法律援助处"/></categories><dataset parentYAxis="P" renderAs="Line" seriesName="去年同期"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><dataset parentYAxis="S" renderAs="Column" seriesName="同比增长（%）"><set value="0.00"/><set value="0.00"/><set value="0.00"/><set value="0.00"/><set value="0.00"/><set value="0.00"/><set value="0.00"/></dataset><dataset parentYAxis="P" renderAs="Line" seriesName="当前统计时间"><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/><set value="0"/></dataset><trendlines><line color="91C728" displayValue="Target" showOnTop="1" startValue="26000"/></trendlines><styles><definition><style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/></definition><application><apply styles="CanvasAnim" toObject="Canvas"/></application></styles></chart>`
+    var xmlContent = `<?xml version="1.0" encoding="utf-8"?>
+<chart PYAxisName="数量" SYAxisName="同比增长(%)" baseFontSize="12" bgColor="#F4F6F9" canvasBgColor="#FFFFFF" caption="刑事案件承办情况数据同比" palette="1" paletteColors="008E8E,FFBB1C,FFD700" showAboutMenuItem="0" showPrintMenuItem="0" showValues="0">
+  <categories><category label="通知辩护"/>
+    <category label="通知代理"/>
+    <category label="侦查阶段"/>
+    <category label="审查起诉阶段"/>
+    <category label="审判阶段"/>
+    <category label="申诉"/>
+    <category label="再审"/>
+    </categories>
+    <dataset parentYAxis="P" renderAs="Line" seriesName="去年同期">
+      <set value="0"/>
+      <set value="0"/>
+      <set value="0"/>
+      <set value="0"/>
+      <set value="0"/>
+      <set value="0"/>
+      <set value="0"/>
+      </dataset>
+      <dataset parentYAxis="S" renderAs="Column" seriesName="同比增长（%）">
+        <set value="9223372036854776000.00"/><set value="0.00"/>
+        <set value="9223372036854776000.00"/>
+        <set value="9223372036854776000.00"/>
+        <set value="9223372036854776000.00"/>
+        <set value="0.00"/>
+        <set value="0.00"/>
+        </dataset>
+        <dataset parentYAxis="P" renderAs="Line" seriesName="当前统计时间">
+          <set value="2"/>
+          <set value="0"/>
+          <set value="1"/>
+          <set value="1"/>
+          <set value="1"/>
+          <set value="0"/>
+          <set value="0"/>
+          </dataset>
+          <trendlines>
+            <line color="91C728" displayValue="Target" showOnTop="1" startValue="26000"/></trendlines>
+            <styles>
+              <definition><style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/>
+                </definition>
+                <application><apply styles="CanvasAnim" toObject="Canvas"/></application></styles>
+            </chart>`
 
     var obj = processColumn3DXML(xmlContent)
+
     console.log('🚀 >> obj:', obj)
     var title = obj.title
     var items = obj.items
@@ -96,11 +141,18 @@
     var data2 = obj.xAxisObj['同比增长（%）']
     var data3 = obj.xAxisObj['当前统计时间']
 
-    let ecDemo = echarts.init(document.getElementById('demo'))
-    let option = {
+    var echartInstance = echarts.init(document.getElementById('demo'))
+    var option = {
       title: {
         text: title,
         left: 'center'
+      },
+
+      grid: {
+        x: 100, //左
+        y: 50, //上
+        x2: 120, //右
+        y2: 120 //下
       },
 
       tooltip: {
@@ -133,10 +185,9 @@
             interval: 0,
             formatter: function (value) {
               var str = ''
-              var num = 8 //每行显示字数
+              var num = 3 //每行显示字数
               var valLength = value.length //该项x轴字数
               var rowNum = Math.ceil(valLength / num) // 行数
-
               if (rowNum > 1) {
                 for (var i = 0; i < rowNum; i++) {
                   var temp = ''
@@ -160,8 +211,7 @@
           name: unitLeft,
           nameLocation: 'middle',
           nameGap: 60,
-          min: 1,
-          interval: 1,
+          min: 3,
           axisLabel: {
             formatter: '{value}'
           }
@@ -178,7 +228,7 @@
           splitArea: {
             show: true,
             areaStyle: {
-              color: '#f2f2f2'
+              color: '#fefefe'
             }
           }
         }
@@ -218,6 +268,6 @@
       ]
     }
 
-    ecDemo.setOption(option)
+    echartInstance.setOption(option)
   </script>
 </html>

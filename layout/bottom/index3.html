@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>通过函数calc()计算内容的高度</title>
+    <style>
+      main {
+        min-height: calc(100vh - 200px); /* 这个200px是header和footer的高度 */
+        background-color: #f0f0f0;
+      }
+      header,
+      footer {
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        color: white;
+      }
+      header {
+        background-color: #4caf50;
+      }
+      footer {
+        background-color: #2196f3;
+      }
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>Header</header>
+    <main>Content</main>
+    <footer>Footer</footer>
+  </body>
+</html>
