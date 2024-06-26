@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--  要确认echarts.js所在的路径是正确的 -->
-    <script type="text/javascript" src="./echarts.js"></script>
+    <script type="text/javascript" src="./echarts4.1.0.min.js"></script>
     <script src="./fxp.min.js"></script>
     <!-- 外部url引入 -->
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.js"></script> -->
@@ -27,25 +27,6 @@
         attributeNamePrefix: '',
         parseAttributeValue: true
       }
-
-      var colorlist = [
-        '#99afc3',
-        '#d4b74b',
-        '#91ab36',
-        '#c38658',
-        '#6fb0b0',
-        '#d48f8f',
-        '#aa85ae',
-        '#99ae7b',
-        '#beba53',
-        '#85bee1',
-        '#9f4448',
-        '#c3b7d3',
-        '#cf9f68',
-        '#e5c9a3',
-        '#c8c573',
-        '#e6a9b3'
-      ]
 
       var parser = new fxp.XMLParser(options)
       var jsonObj = parser.parse(xmlContent)
@@ -72,8 +53,11 @@
         var arr = []
 
         for (var index = 0; index < data.set.length; index++) {
-          arr.push(data.set[index].value)
+          var temp = data.set[index].value
+          temp = parseFloat(temp.toFixed(2)) // 如果temp超过2位小数，精确到2位小数
+          arr.push(temp)
         }
+        // 如果temp超过2位小数 精准2位数
 
         obj.xAxisObj[key] = arr
       })
@@ -84,48 +68,7 @@
 
   <script type="text/javascript">
     var xmlContent = `<?xml version="1.0" encoding="utf-8"?>
-<chart PYAxisName="数量" SYAxisName="同比增长(%)" baseFontSize="12" bgColor="#F4F6F9" canvasBgColor="#FFFFFF" caption="刑事案件承办情况数据同比" palette="1" paletteColors="008E8E,FFBB1C,FFD700" showAboutMenuItem="0" showPrintMenuItem="0" showValues="0">
-  <categories><category label="通知辩护"/>
-    <category label="通知代理"/>
-    <category label="侦查阶段"/>
-    <category label="审查起诉阶段"/>
-    <category label="审判阶段"/>
-    <category label="申诉"/>
-    <category label="再审"/>
-    </categories>
-    <dataset parentYAxis="P" renderAs="Line" seriesName="去年同期">
-      <set value="0"/>
-      <set value="0"/>
-      <set value="0"/>
-      <set value="0"/>
-      <set value="0"/>
-      <set value="0"/>
-      <set value="0"/>
-      </dataset>
-      <dataset parentYAxis="S" renderAs="Column" seriesName="同比增长（%）">
-        <set value="9223372036854776000.00"/><set value="0.00"/>
-        <set value="9223372036854776000.00"/>
-        <set value="9223372036854776000.00"/>
-        <set value="9223372036854776000.00"/>
-        <set value="0.00"/>
-        <set value="0.00"/>
-        </dataset>
-        <dataset parentYAxis="P" renderAs="Line" seriesName="当前统计时间">
-          <set value="2"/>
-          <set value="0"/>
-          <set value="1"/>
-          <set value="1"/>
-          <set value="1"/>
-          <set value="0"/>
-          <set value="0"/>
-          </dataset>
-          <trendlines>
-            <line color="91C728" displayValue="Target" showOnTop="1" startValue="26000"/></trendlines>
-            <styles>
-              <definition><style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/>
-                </definition>
-                <application><apply styles="CanvasAnim" toObject="Canvas"/></application></styles>
-            </chart>`
+<chart PYAxisName="数量" SYAxisName="同比增长(%)" baseFontSize="12" bgColor="#F4F6F9" canvasBgColor="#FFFFFF" caption="案件受理数据同比" palette="1" paletteColors="008E8E,FFBB1C,FFD700" showAboutMenuItem="0" showPrintMenuItem="0" showValues="0"><categories><category label="民事"/><category label="刑事"/><category label="行政"/></categories><dataset parentYAxis="P" renderAs="Line" seriesName="去年同期"><set value="0"/><set value="0"/><set value="0"/></dataset><dataset parentYAxis="S" renderAs="Column" seriesName="同比增长（%）"><set value="9223372036854776000.00"/><set value="9223372036854776000.00"/><set value="0.00"/></dataset><dataset parentYAxis="P" renderAs="Line" seriesName="当前统计时间"><set value="5"/><set value="4"/><set value="0"/></dataset><trendlines><line color="91C728" displayValue="Target" showOnTop="1" startValue="26000"/></trendlines><styles><definition><style duration="1" name="CanvasAnim" param="_xScale" start="0" type="animation"/></definition><application><apply styles="CanvasAnim" toObject="Canvas"/></application></styles></chart>`
 
     var obj = processColumn3DXML(xmlContent)
 
@@ -140,6 +83,24 @@
     var data1 = obj.xAxisObj['去年同期']
     var data2 = obj.xAxisObj['同比增长（%）']
     var data3 = obj.xAxisObj['当前统计时间']
+    var colorlist = [
+      '#99afc3',
+      '#d4b74b',
+      '#91ab36',
+      '#c38658',
+      '#6fb0b0',
+      '#d48f8f',
+      '#aa85ae',
+      '#99ae7b',
+      '#beba53',
+      '#85bee1',
+      '#9f4448',
+      '#c3b7d3',
+      '#cf9f68',
+      '#e5c9a3',
+      '#c8c573',
+      '#e6a9b3'
+    ]
 
     var echartInstance = echarts.init(document.getElementById('demo'))
     var option = {
@@ -147,6 +108,25 @@
         text: title,
         left: 'center'
       },
+
+      color: [
+        '#beba53',
+        '#85bee1',
+        '#9f4448',
+        '#cf9f68',
+        '#e5c9a3',
+        '#c8c573',
+        '#aa85ae',
+        '#99ae7b',
+        '#c3b7d3',
+        '#e6a9b3',
+        '#99afc3',
+        '#d4b74b',
+        '#91ab36',
+        '#c38658',
+        '#6fb0b0',
+        '#d48f8f'
+      ],
 
       grid: {
         x: 100, //左
@@ -269,5 +249,6 @@
     }
 
     echartInstance.setOption(option)
+    // echartInstance.dispose()
   </script>
 </html>

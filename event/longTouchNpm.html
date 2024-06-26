@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Press Over 1 Second</title>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+    <script>
+      function initPressOverSecond() {
+        var element = document.getElementById('pressMe')
+
+        // 创建一个Hammer实例
+        var hammer = new Hammer(element)
+
+        // 配置长按事件
+        hammer.get('press').set({
+          time: 1000 // 长按时间为1000毫秒（1秒）
+        })
+
+        // 监听长按事件
+        hammer.on('press', function () {
+          console.log('Pressed for over 1 second!')
+          // 这里执行按压超过1秒后的操作
+        })
+      }
+
+      window.onload = initPressOverSecond
+    </script>
+    <style>
+      #pressMe {
+        width: 300px;
+        height: 120px;
+        background-color: #fefe;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="pressMe">Press Me for over 1 second</button>
+  </body>
+</html>

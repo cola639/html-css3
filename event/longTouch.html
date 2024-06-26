@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Press Over 1 Second</title>
+    <script>
+      function initPressOverSecond() {
+        var pressTimer = null
+
+        var element = document.getElementById('pressMe')
+
+        element.addEventListener('touchstart', function (e) {
+          // 设置定时器
+          pressTimer = setTimeout(function () {
+            console.log('Pressed for over 1 second!')
+            // 这里执行按压超过1秒后的操作
+          }, 1000)
+        })
+
+        element.addEventListener('touchend', function (e) {
+          // 如果定时器存在，则清除定时器
+          if (pressTimer) {
+            clearTimeout(pressTimer)
+            pressTimer = null
+          }
+        })
+      }
+
+      window.onload = initPressOverSecond
+    </script>
+    <style>
+      #pressMe {
+        width: 300px;
+        height: 120px;
+        background-color: #fefe;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="pressMe">Press Me for over 1 second</button>
+  </body>
+</html>
