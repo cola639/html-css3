@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+    <div>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum quaerat perspiciatis molestias culpa voluptas commodi vitae quasi saepe
+      cupiditate assumenda?
+    </div>
+  </body>
+
+  <script>
+    $(document).ready(function () {
+      function handleOrientationChange() {
+        if (window.orientation === 0 || window.orientation === 180) {
+          $('body').css('transform', 'rotate(0deg)')
+          // Portrait
+          //
+        } else {
+          // Landscape
+          $('body').css('transform', 'rotate(90deg)')
+        }
+      }
+
+      // Listen for orientation changes
+      $(window).on('orientationchange', handleOrientationChange)
+
+      // 页面加载时进行初始方向检测
+      handleOrientationChange()
+    })
+  </script>
+</html>
