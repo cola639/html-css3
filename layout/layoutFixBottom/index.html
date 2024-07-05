@@ -4,46 +4,57 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index</title>
+    <title>Classical Mobile Layout</title>
     <link rel="stylesheet" href="./normalize.css" />
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+    <style>
+      :root {
+        --headBar: 100px;
+        --bottomBar: 60px;
+      }
+      html,
+      body {
+        box-sizing: border-box;
+      }
+
+      .wrap {
+        align-items: center;
+        background-color: #eaebef;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding-bottom: var(--bottomBar);
+        width: 100vw;
+      }
+      .wrap_head {
+        background-color: #32bc82;
+        height: var(--headBar);
+        width: 100vw;
+      }
+      .wrap_content {
+        align-items: center;
+        background-color: #d2b96a;
+        display: flex;
+        min-height: calc(100vh - var(--headBar) - var(--bottomBar));
+        justify-content: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        width: 90vw;
+      }
+      /* fixed */
+      .wrap_bottom {
+        background-color: #d6e3fe;
+        bottom: 0;
+        height: var(--bottomBar);
+        position: fixed;
+        width: 100vw;
+      }
+    </style>
   </head>
   <body>
     <div class="wrap">
+      <div class="wrap_head"></div>
       <div class="wrap_content"></div>
       <div class="wrap_bottom"></div>
     </div>
   </body>
-  <style>
-    .wrap {
-      background-color: #926161;
-      box-sizing: border-box;
-      padding-top: 10px;
-      padding-bottom: 70px;
-      width: 100vw;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .wrap_content {
-      background-color: #d2b96a;
-      box-sizing: border-box;
-      padding-bottom: 10px;
-      width: 90vw;
-      height: 1000px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    /* FiX */
-    .wrap_bottom {
-      width: 100vw;
-      height: 60px;
-      background-color: #fff;
-      position: fixed;
-      bottom: 0;
-      box-sizing: border-box;
-    }
-  </style>
-  <script src="./index.js"></script>
 </html>
