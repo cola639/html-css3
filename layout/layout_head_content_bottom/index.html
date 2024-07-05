@@ -10,7 +10,6 @@
       :root {
         --headBar: 100px;
         --bottomBar: 60px;
-        --gap: 10px;
       }
       *,
       *::after,
@@ -37,10 +36,21 @@
         align-items: center;
         background-color: #d2b96a;
         display: flex;
+        flex-direction: column;
         min-height: calc(100vh - var(--headBar) - var(--bottomBar));
-        justify-content: center;
+        justify-content: flex-start;
         margin-top: 10px;
         width: 90vw;
+        padding-bottom: 10px;
+      }
+      .wrap_content_item {
+        width: 100%;
+        height: 50px;
+        background-color: #2f59d2;
+        margin-top: 10px;
+      }
+      .wrap_content_item:first-child {
+        margin-top: 0px;
       }
       /* fixed */
       .wrap_bottom {
@@ -55,7 +65,17 @@
   <body>
     <div class="wrap">
       <div class="wrap_head"></div>
-      <div class="wrap_content"></div>
+      <div class="wrap_content">
+        <div class="wrap_content_item">ITEM1</div>
+        <div class="wrap_content_item">ITEM2</div>
+        <div class="wrap_content_item">ITEM3</div>
+        <div class="wrap_content_item">ITEM1</div>
+        <div class="wrap_content_item">ITEM2</div>
+        <div class="wrap_content_item">ITEM3</div>
+        <div class="wrap_content_item">ITEM1</div>
+        <div class="wrap_content_item">ITEM3</div>
+        <div class="wrap_content_item">ITEM1</div>
+      </div>
       <div class="wrap_bottom"></div>
     </div>
   </body>
