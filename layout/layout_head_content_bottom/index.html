@@ -8,8 +8,16 @@
     <link rel="stylesheet" href="./normalize.css" />
     <style>
       :root {
-        --headBar: 100px;
-        --bottomBar: 60px;
+        --bottomBar-background: #d6e3fe;
+        --bottomBar-height: 60px;
+        --content-background: #d2b96a;
+        --content-item-background: #2f59d2;
+        --content-item-height: 50px;
+        --content-margin-top: 10px;
+        --content-padding: 10px;
+        --headBar-background: #32bc82;
+        --headBar-height: 100px;
+        --wrap-background: #eaebef;
       }
       *,
       *::after,
@@ -17,66 +25,75 @@
         box-sizing: border-box;
       }
 
-      .wrap {
-        align-items: center;
-        background-color: #eaebef;
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
         display: flex;
-        justify-content: flex-start;
         flex-direction: column;
-        padding-bottom: var(--bottomBar);
+        align-items: center;
+        justify-content: flex-start;
         width: 100vw;
         min-height: 100vh;
+        background-color: var(--wrap-background);
+        padding-bottom: var(--bottomBar-height);
       }
-      .wrap_head {
-        background-color: #32bc82;
-        height: var(--headBar);
+
+      header {
+        background-color: var(--headBar-background);
+        height: var(--headBar-height);
         width: 100vw;
       }
-      .wrap_content {
-        align-items: center;
-        background-color: #d2b96a;
+
+      main {
         display: flex;
         flex-direction: column;
-        min-height: calc(100vh - var(--headBar) - var(--bottomBar));
+        align-items: center;
         justify-content: flex-start;
-        margin-top: 10px;
+        background-color: var(--content-background);
         width: 90vw;
-        padding-bottom: 10px;
+        min-height: calc(100vh - var(--headBar-height) - var(--bottomBar-height));
+        margin-top: var(--content-margin-top);
+        padding-bottom: var(--content-padding);
       }
-      .wrap_content_item {
+
+      .content-item {
         width: 100%;
-        height: 50px;
-        background-color: #2f59d2;
-        margin-top: 10px;
+        height: var(--content-item-height);
+        background-color: var(--content-item-background);
+        margin-top: var(--content-margin-top);
       }
-      .wrap_content_item:first-child {
-        margin-top: 0px;
+
+      .content-item:first-child {
+        margin-top: 0;
       }
-      /* fixed */
-      .wrap_bottom {
-        background-color: #d6e3fe;
-        bottom: 0;
-        height: var(--bottomBar);
-        position: fixed;
+
+      footer {
+        background-color: var(--bottomBar-background);
+        height: var(--bottomBar-height);
         width: 100vw;
+        position: fixed;
+        bottom: 0;
       }
     </style>
   </head>
   <body>
-    <div class="wrap">
-      <div class="wrap_head"></div>
-      <div class="wrap_content">
-        <div class="wrap_content_item">ITEM1</div>
-        <div class="wrap_content_item">ITEM2</div>
-        <div class="wrap_content_item">ITEM3</div>
-        <div class="wrap_content_item">ITEM1</div>
-        <div class="wrap_content_item">ITEM2</div>
-        <div class="wrap_content_item">ITEM3</div>
-        <div class="wrap_content_item">ITEM1</div>
-        <div class="wrap_content_item">ITEM3</div>
-        <div class="wrap_content_item">ITEM1</div>
-      </div>
-      <div class="wrap_bottom"></div>
+    <div class="container">
+      <header></header>
+      <main>
+        <div class="content-item">ITEM1</div>
+        <div class="content-item">ITEM2</div>
+        <div class="content-item">ITEM3</div>
+        <div class="content-item">ITEM1</div>
+        <div class="content-item">ITEM2</div>
+        <div class="content-item">ITEM3</div>
+        <div class="content-item">ITEM1</div>
+        <div class="content-item">ITEM3</div>
+        <div class="content-item">ITEM1</div>
+      </main>
+      <footer></footer>
     </div>
   </body>
 </html>
