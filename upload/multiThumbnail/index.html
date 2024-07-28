@@ -5,33 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Video Upload</title>
     <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.1.1/dist/compressor.min.js"></script>
+    <style>
+      .thumbnail {
+        max-width: 300px;
+        display: none;
+        margin: 10px;
+      }
+    </style>
   </head>
   <body>
     <div>
-      <input type="file" id="videoInput" accept="video/*" />
+      <input type="file" id="videoInput" accept="video/*" multiple />
       <button id="uploadButton">Upload</button>
     </div>
     <div>
-      <h3>Thumbnail Preview:</h3>
-      <img id="thumbnailPreview" src="" alt="Thumbnail Preview" style="max-width: 300px; display: none" />
+      <h3>Thumbnail Previews:</h3>
+      <div id="thumbnailsContainer"></div>
     </div>
 
     <script>
       document.getElementById('videoInput').addEventListener('change', handleVideoChange)
       document.getElementById('uploadButton').addEventListener('click', handleUpload)
 
-      let videoFile = null
-      let compressedImageFile = null
+      let filesData = []
 
       function handleVideoChange(event) {
-        const file = event.target.files[0]
-        if (file) {
-          videoFile = file
-          generateThumbnail(file)
-        }
+        const files = event.target.files
+        filesData = []
+
+        Array.from(files).forEach(file => {
+          const fileData = {
+            videoFile: file,
+            thumbnailFile: null,
+            thumbnailURL: ''
+          }
+          generateThumbnail(file, fileData)
+          filesData.push(fileData)
+        })
       }
 
-      function generateThumbnail(file) {
+      function generateThumbnail(file, fileData) {
         const video = document.createElement('video')
         const canvas = document.createElement('canvas')
         const ctx = canvas.getContext('2d')
@@ -51,15 +64,12 @@
           canvas.toBlob(
             blob => {
               new Compressor(blob, {
-                quality: 0.1,
+                quality: 0.6,
                 success(result) {
-                  compressedImageFile = new File([result], 'thumbnail.jpg', { type: 'image/jpeg' })
-
-                  // 显示缩略图
-                  const thumbnailURL = URL.createObjectURL(result)
-                  const thumbnailPreview = document.getElementById('thumbnailPreview')
-                  thumbnailPreview.src = thumbnailURL
-                  thumbnailPreview.style.display = 'block'
+                  const thumbnailFile = new File([result], 'thumbnail.jpg', { type: 'image/jpeg' })
+                  fileData.thumbnailFile = thumbnailFile
+                  fileData.thumbnailURL = URL.createObjectURL(result)
+                  displayThumbnail(fileData.thumbnailURL)
                 }
               })
             },
@@ -69,12 +79,21 @@
         }
       }
 
-      async function handleUpload() {
-        if (!videoFile || !compressedImageFile) return
+      function displayThumbnail(thumbnailURL) {
+        const thumbnailPreview = document.createElement('img')
+        thumbnailPreview.src = thumbnailURL
+        thumbnailPreview.className = 'thumbnail'
+        thumbnailPreview.style.display = 'block'
+        document.getElementById('thumbnailsContainer').appendChild(thumbnailPreview)
+      }
 
+      async function handleUpload() {
         const formData = new FormData()
-        formData.append('video', videoFile)
-        formData.append('thumbnail', compressedImageFile)
+
+        filesData.forEach((fileData, index) => {
+          formData.append(`video${index}`, fileData.videoFile)
+          formData.append(`thumbnail${index}`, fileData.thumbnailFile)
+        })
 
         // Replace with your actual upload logic
         await fetch('your-upload-endpoint', {
