@@ -90,13 +90,13 @@
       async function handleUpload() {
         const formData = new FormData()
 
-        filesData.forEach((fileData, index) => {
-          formData.append(`video${index}`, fileData.videoFile)
-          formData.append(`thumbnail${index}`, fileData.thumbnailFile)
+        filesData.forEach(fileData => {
+          formData.append('videos', fileData.videoFile)
+          formData.append('thumbnails', fileData.thumbnailFile)
         })
 
         // Replace with your actual upload logic
-        await fetch('your-upload-endpoint', {
+        await fetch('http://localhost:8888/common/generateThumbnail', {
           method: 'POST',
           body: formData
         })
