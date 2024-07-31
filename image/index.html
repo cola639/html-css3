@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Img-bck Img-poster</title>
+  </head>
+  <style>
+    div,
+    img {
+      margin-top: 20px;
+    }
+
+    .img-bck {
+      width: 375px;
+      height: 200px;
+      object-fit: fill;
+    }
+
+    .img-poster {
+      width: 375px;
+      height: 200px;
+      background-image: url('./test_4MB.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+
+  <body>
+    <!-- 单独一张图 适配div大小 -->
+    <img class="img-bck" src="./test_4MB.jpg" />
+
+    <!-- 文字在图片上 -->
+    <div class="img-poster"><span> 文字在上面 </span></div>
+  </body>
+</html>
