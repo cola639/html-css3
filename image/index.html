@@ -3,35 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Img-bck Img-poster</title>
+    <title>Img-poster Img-bck</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+      }
+
+      .img-poster {
+        margin-top: 20px;
+        width: 375px;
+        height: 200px;
+        object-fit: fill;
+      }
+
+      .img-bck {
+        margin-top: 20px;
+        width: 375px;
+        height: 200px;
+        background-image: url('./test_4MB.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: white;
+        font-size: 24px;
+      }
+    </style>
   </head>
-  <style>
-    div,
-    img {
-      margin-top: 20px;
-    }
-
-    .img-bck {
-      width: 375px;
-      height: 200px;
-      object-fit: fill;
-    }
-
-    .img-poster {
-      width: 375px;
-      height: 200px;
-      background-image: url('./test_4MB.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-  </style>
-
   <body>
-    <!-- 单独一张图 适配div大小 -->
-    <img class="img-bck" src="./test_4MB.jpg" />
+    <!-- 单独一张图 fill适配容器大小 -->
+    <img class="img-poster" src="./test_4MB.jpg" alt="Poster Image" />
 
     <!-- 文字在图片上 -->
-    <div class="img-poster"><span> 文字在上面 </span></div>
+    <div class="img-bck">
+      <span>文字在上面</span>
+    </div>
   </body>
 </html>
