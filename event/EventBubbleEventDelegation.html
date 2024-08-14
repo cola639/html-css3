@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Delegation and Event Bubbling Example</title>
+  </head>
+  <body>
+    <!-- EventDelegation 一个包含多个按钮的父元素 -->
+    <div id="parent">
+      <!-- 子元素按钮 -->
+      <button class="child">Button 1</button>
+      <button class="child">Button 2</button>
+      <button class="child">Button 3</button>
+    </div>
+
+    <!-- EventBubble 另一个父元素，用于演示事件冒泡 -->
+    <div id="bubble-container">
+      <button id="bubble-button">Click me</button>
+    </div>
+
+    <script>
+      // EventDelegation：我们在父元素 #parent 上添加一个事件处理程序
+      document.getElementById('parent').addEventListener('click', function (event) {
+        // 检查事件目标是否具有 'child' 类（即是否是我们想要的按钮）
+        if (event.target.classList.contains('child')) {
+          // 输出被点击的按钮的文本
+          console.log(event.target.innerText + ' clicked')
+        }
+      })
+
+      // EventBubble：为按钮和其父级容器分别添加事件处理程序
+      document.getElementById('bubble-button').addEventListener('click', function (event) {
+        console.log('Button clicked')
+        // 可以通过 event.stopPropagation() 阻止事件继续冒泡
+        // event.stopPropagation();
+      })
+
+      document.getElementById('bubble-container').addEventListener('click', function (event) {
+        console.log('Div clicked')
+      })
+
+      // 当点击 #bubble-button 时，事件将会冒泡到 #bubble-container 上，
+      // 触发两个事件处理程序：一个在按钮上，另一个在容器上。
+    </script>
+  </body>
+</html>
