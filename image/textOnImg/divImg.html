@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Background Image with Text Overlay</title>
+    <style>
+      .background-container {
+        width: 100%;
+        height: 400px; /* 设置容器高度 */
+        background-image: url('https://via.placeholder.com/600x400');
+        background-size: 100% 100%; /* 类似于 object-fit: fill */
+        background-position: center; /* 背景图片居中 */
+        background-repeat: no-repeat; /* 不重复背景图片 */
+        position: relative; /* 让文字能够绝对定位 */
+      }
+
+      .overlay-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-container">
+      <div class="overlay-text">Hello, World!</div>
+    </div>
+  </body>
+</html>
+<!-- 在使用 `div` 元素并通过 `background-image` 设置背景图片时，`background-size` 是用于控制背景图片如何填充容器的属性。虽然没有直接等同于 `object-fit:
+fill` 的属性，但你可以通过使用 `background-size` 和 `background-position` 来实现类似的效果。 ### 实现 `object-fit: fill` 类似效果的方法： ```html
+``` ### 解释： 1. **`background-size: cover;`**: - `cover` 会使背景图片尽可能小地覆盖整个容器，同时保持图片的宽高比。这类似于 `object-fit:
+cover`，但有时会裁剪图片的一部分以填满容器。 2. **`background-size: contain;`**: - 如果你想确保整个图片都显示在容器内而不裁剪，可以使用
+`contain`。不过，这样可能会导致图片不填满整个容器（即可能会出现留白）。 3. **`background-size: 100% 100%;`**: -
+这个设置会强制背景图片拉伸以完全填满容器，类似于 `object-fit: fill` 的效果。它可能会导致图片的比例失调。 - 示例： ```css .background-container {
+background-size: 100% 100%; } ``` ### 总结： - `background-size: cover;` 是最常用的选项，类似于 `object-fit: cover`，保持图片比例且填满整个容器。 -
+`background-size: 100% 100%;` 强制图片填充整个容器，可能导致图片变形，但类似于 `object-fit: fill`。 - 选择合适的 `background-size`
+设置取决于你是否希望保持图片的比例。 -->
