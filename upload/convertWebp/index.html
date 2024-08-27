@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convert Image to WebP</title>
+  </head>
+  <body>
+    <input type="file" id="upload" accept="image/png, image/jpeg" />
+    <img id="preview" alt="Preview" style="max-width: 300px" />
+    <script>
+      document.getElementById('upload').addEventListener('change', async event => {
+        const file = event.target.files[0]
+        if (!file) return
+
+        const img = document.createElement('img')
+        img.src = URL.createObjectURL(file)
+
+        img.onload = async () => {
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+
+          canvas.width = img.width
+          canvas.height = img.height
+
+          ctx.drawImage(img, 0, 0, img.width, img.height)
+
+          // 将图像转换为 WebP 格式
+          const webpDataUrl = canvas.toDataURL('image/webp', 0.8) // 0.8 是压缩质量，范围是 0 到 1
+
+          // 预览转换后的 WebP 图片
+          document.getElementById('preview').src = webpDataUrl
+
+          // 将 Data URL 转换为 Blob 对象以便上传
+          const webpBlob = await fetch(webpDataUrl).then(r => r.blob())
+
+          // 现在你可以将 webpBlob 上传到服务器
+          uploadToServer(webpBlob)
+        }
+      })
+
+      function uploadToServer(blob) {
+        const formData = new FormData()
+        formData.append('file', blob, 'image.webp')
+
+        fetch('/upload-endpoint', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Upload successful:', data)
+          })
+          .catch(error => {
+            console.error('Upload failed:', error)
+          })
+      }
+    </script>
+  </body>
+</html>
