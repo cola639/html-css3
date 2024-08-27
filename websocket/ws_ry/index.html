@@ -17,7 +17,11 @@
       <label for="message">Message:</label>
       <input type="text" id="message" value="Hello, WebSocket!" />
     </div>
+    <br />
     <button onclick="sendMessage()">Send Message</button>
+    <br />
+    <br />
+    <button onclick="postMessage()">Post Message</button>
     <hr />
     <div>
       <h2>Messages:</h2>
@@ -47,6 +51,22 @@
         const message = document.getElementById('message').value
         // 确保发送的路径前缀是 "/app"
         stompClient.send('/app' + destination, {}, message)
+      }
+
+      // post发送信息到服务器
+      function postMessage() {
+        const destination = document.getElementById('destination').value
+        const message = document.getElementById('message').value
+        fetch(`http://localhost:8888/topic?destination=${encodeURIComponent(destination)}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: message }) // 只发送 message 在请求体中
+        })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error:', error))
       }
 
       // 显示接收到的消息
