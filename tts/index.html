@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text to Speech Example with Recording</title>
+  </head>
+  <body>
+    <textarea id="textToRead" rows="10" cols="50">
+    这是你的 800 字文本，你可以将它替换为任何你想播放的文字。现代浏览器支持 Web Speech API，能够将文本转换为语音。这是一个非常有用的功能，适用于阅读长篇文章或为用户提供可访问性功能。
+    </textarea>
+    <br /><br />
+    <button onclick="playAndRecordText()">播放并录制文本</button>
+    <br /><br />
+    <button onclick="saveAudio()">保存为 MP3</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/recorderjs/0.1.0/recorder.js"></script>
+    <script>
+      let recorder, audioContext, audioStream
+
+      // 播放并录制文本
+      async function playAndRecordText() {
+        const text = document.getElementById('textToRead').value
+
+        // 创建 SpeechSynthesisUtterance 对象
+        const utterance = new SpeechSynthesisUtterance(text)
+        utterance.lang = 'zh-CN' // 设置中文
+        utterance.rate = 1 // 速度 0.1 - 10
+        utterance.volume = 1 // 音量 0 - 1
+        utterance.pitch = 1 // 音调 0 - 2
+
+        // 启动音频上下文和流
+        audioContext = new AudioContext()
+        audioStream = await navigator.mediaDevices.getUserMedia({ audio: true })
+        const input = audioContext.createMediaStreamSource(audioStream)
+
+        // 创建录音器
+        recorder = new Recorder(input, { numChannels: 1 })
+        recorder.record()
+
+        // 播放语音
+        window.speechSynthesis.speak(utterance)
+
+        // 当语音播放结束时，停止录音
+        utterance.onend = function () {
+          recorder.stop()
+          audioStream.getAudioTracks()[0].stop()
+        }
+      }
+
+      // 保存为音频文件
+      function saveAudio() {
+        recorder.exportWAV(function (blob) {
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.style.display = 'none'
+          a.href = url
+          a.download = 'speech.wav' // 下载为 WAV 文件
+          document.body.appendChild(a)
+          a.click()
+          URL.revokeObjectURL(url)
+        })
+      }
+    </script>
+  </body>
+</html>
