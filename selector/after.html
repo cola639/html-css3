@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Border vs ::after</title>
+    <style>
+      .box-container {
+        display: flex;
+        gap: 40px;
+        margin: 60px;
+        font-family: sans-serif;
+      }
+
+      .box {
+        padding: 20px;
+        font-size: 16px;
+        background-color: #f0f0f0;
+      }
+
+      /* ✅ 用 border-bottom */
+      .border-box {
+        border-bottom: 1px solid #1890ff;
+      }
+
+      /* ✅ 用 ::after 模拟 bottom line */
+      .after-box {
+        position: relative;
+      }
+
+      .after-box::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -10px;
+        width: 100%;
+        height: 0;
+        background-color: #1890ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box-container">
+      <div class="box border-box">使用 border-bottom</div>
+      <div class="box after-box">使用 ::after 实现 bottom</div>
+    </div>
+  </body>
+</html>

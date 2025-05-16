@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web APIs Screenshot Example</title>
+    <style>
+      #screenshot {
+        max-width: 100%;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>屏幕截图示例</h2>
+    <button onclick="captureScreen()">捕获屏幕并截图</button>
+    <canvas id="screenshotCanvas" style="display: none"></canvas>
+    <br />
+    <img id="screenshot" />
+
+    <script>
+      async function captureScreen() {
+        try {
+          // 使用 getDisplayMedia 捕获屏幕流
+          const screenStream = await navigator.mediaDevices.getDisplayMedia({
+            video: { mediaSource: 'screen' }
+          })
+
+          const video = document.createElement('video')
+          video.srcObject = screenStream
+          video.play()
+
+          video.onloadedmetadata = () => {
+            const canvas = document.getElementById('screenshotCanvas')
+            const context = canvas.getContext('2d')
+
+            // 设置 canvas 大小与视频内容一致
+            canvas.width = video.videoWidth
+            canvas.height = video.videoHeight
+
+            // 将视频内容绘制到 canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height)
+
+            // 生成截图的 base64 图片数据
+            const imgData = canvas.toDataURL('image/png')
+
+            // 显示截图
+            const imgElement = document.getElementById('screenshot')
+            imgElement.src = imgData
+
+            // 停止屏幕捕获流
+            screenStream.getTracks().forEach(track => track.stop())
+          }
+        } catch (err) {
+          console.error('Error capturing screen:', err)
+        }
+      }
+    </script>
+  </body>
+</html>

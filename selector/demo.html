@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS 选择器示例</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+
+      section {
+        margin-bottom: 40px;
+      }
+
+      h2 {
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+
+      /* 1. 第一个子元素 */
+      .example1 div:first-child {
+        color: red;
+      }
+
+      /* 2. 最后一个子元素 */
+      .example2 li:last-child {
+        font-weight: bold;
+      }
+
+      /* 3. 同类型中的第一个和最后一个 */
+      .example3 div:first-of-type {
+        color: green;
+      }
+      .example3 div:last-of-type {
+        background: #eee;
+      }
+
+      /* 4. 相邻兄弟选择器 */
+      .example4 h1 + p {
+        color: blue;
+      }
+
+      /* 5. 所有后续兄弟选择器 */
+      .example5 h1 ~ p {
+        font-style: italic;
+      }
+
+      /* 6. 类型 + class 选择器 */
+      .example6 div.alert {
+        background: yellow;
+      }
+
+      .example6 span.highlight {
+        color: red;
+      }
+
+      /* 7. 组合选择器 */
+      .example7 ul > li:first-of-type {
+        color: blue;
+      }
+
+      .example7 tr.expanded-row > td:first-child {
+        padding-left: 40px;
+        background: #f6ffed;
+      }
+
+      /* 8. 否定选择器 */
+      .example8 li:not(:last-child) {
+        margin-bottom: 8px;
+        color: gray;
+      }
+
+      /* 9. nth-child */
+      .example9 li:nth-child(2) {
+        background: #f0f0f0;
+      }
+
+      .example9 li:nth-last-child(1) {
+        color: green;
+      }
+
+      /* 10. 最后一个指定 class（用 JS 添加样式） */
+      .example10 div.target {
+        padding: 5px;
+        background: #eee;
+      }
+
+      .example10 .last-target {
+        border: 2px dashed #1890ff;
+      }
+
+      /* Bonus：树结构线 */
+      .tree ul {
+        list-style: none;
+        margin-left: 20px;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .tree ul::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        background: #ccc;
+      }
+
+      .tree li::before {
+        content: '';
+        position: absolute;
+        left: -20px;
+        top: 12px;
+        width: 20px;
+        height: 1px;
+        background: #ccc;
+      }
+
+      .tree li {
+        position: relative;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="example1">
+      <h2>1. first-child</h2>
+      <div>我是第一个 div（红色）</div>
+      <div>第二个</div>
+    </section>
+
+    <section class="example2">
+      <h2>2. last-child</h2>
+      <ul>
+        <li>苹果</li>
+        <li>香蕉</li>
+        <li>西瓜（加粗）</li>
+      </ul>
+    </section>
+
+    <section class="example3">
+      <h2>3. first-of-type / last-of-type</h2>
+      <span>我是 span</span>
+      <div>第一个 div（绿色）</div>
+      <div>中间的</div>
+      <div>最后一个 div（灰背景）</div>
+    </section>
+
+    <section class="example4">
+      <h2>4. 相邻兄弟选择器 +</h2>
+      <h1>标题</h1>
+      <p>紧跟着的段落（蓝色）</p>
+      <p>另一个段落</p>
+    </section>
+
+    <section class="example5">
+      <h2>5. 所有后续兄弟选择器 ~</h2>
+      <h1>标题</h1>
+      <p>所有在标题之后的段落（斜体）</p>
+      <p>包括这个也变了</p>
+    </section>
+
+    <section class="example6">
+      <h2>6. 类型 + class</h2>
+      <div class="alert">我是 div.alert</div>
+      <span class="highlight">我是 span.highlight（红色）</span>
+    </section>
+
+    <section class="example7">
+      <h2>7. 父子结构限定</h2>
+      <ul>
+        <li>第一个 li（蓝色）</li>
+        <li>第二个 li</li>
+      </ul>
+      <table>
+        <tr class="expanded-row">
+          <td>第一个单元格（左边距）</td>
+          <td>第二个</td>
+        </tr>
+      </table>
+    </section>
+
+    <section class="example8">
+      <h2>8. not() 排除最后一个</h2>
+      <ul>
+        <li>会有间距</li>
+        <li>会有间距</li>
+        <li>最后一个（不变）</li>
+      </ul>
+    </section>
+
+    <section class="example9">
+      <h2>9. nth-child</h2>
+      <ul>
+        <li>第一个</li>
+        <li>第二个（灰背景）</li>
+        <li>第三个（绿色文字）</li>
+      </ul>
+    </section>
+
+    <section class="example10">
+      <h2>10. 最后一个 class="target" 元素（用 JS 处理）</h2>
+      <div class="target">目标 1</div>
+      <div class="target">目标 2</div>
+      <div class="target">目标 3（将被选中加边框）</div>
+    </section>
+
+    <section class="tree">
+      <h2>Bonus：树结构线</h2>
+      <ul>
+        <li>
+          节点 1
+          <ul>
+            <li>节点 1.1</li>
+            <li>节点 1.2</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <script>
+      // JS 实现：选中最后一个 .target 元素
+      const targets = document.querySelectorAll('.example10 .target')
+      const last = targets[targets.length - 1]
+      if (last) last.classList.add('last-target')
+    </script>
+  </body>
+</html>

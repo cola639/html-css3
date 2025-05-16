@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>border-inline-end 示例</title>
+    <!-- 在英文（LTR）环境下，等价于 border-right
+在阿拉伯语等 RTL 环境下，等价于 border-left -->
+    <style>
+      .container {
+        display: flex;
+        gap: 40px;
+        margin: 40px;
+        font-family: sans-serif;
+      }
+
+      .box {
+        padding: 20px;
+        background: #f9f9f9;
+        width: 200px;
+      }
+
+      .classic-border {
+        border-right: 4px solid #1890ff;
+      }
+
+      .logical-border {
+        border-inline-end: 4px solid #fa541c;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>direction: ltr（默认英文）</h2>
+    <div class="container" dir="ltr">
+      <div class="box classic-border">border-right</div>
+      <div class="box logical-border">border-inline-end</div>
+    </div>
+
+    <h2>direction: rtl (阿拉伯语)</h2>
+    <div class="container" dir="rtl">
+      <div class="box classic-border">border-right</div>
+      <div class="box logical-border">border-inline-end</div>
+    </div>
+  </body>
+</html>
