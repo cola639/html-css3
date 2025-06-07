@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tree View Demo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      .tree {
+        list-style: none;
+        padding-left: 20px;
+      }
+
+      .tree li {
+        position: relative;
+        margin: 5px 0;
+        cursor: pointer;
+      }
+
+      .tree-toggle::before {
+        content: '|_>';
+        margin-right: 5px;
+        color: #555;
+        display: inline-block;
+        width: 2em;
+      }
+
+      .collapsed::before {
+        content: '|_▸';
+      }
+
+      .expanded::before {
+        content: '|_▾';
+      }
+
+      .tree ul {
+        display: none;
+        padding-left: 20px;
+        border-left: 1px dotted #aaa;
+        margin-left: 6px;
+      }
+
+      .tree ul.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Tree Structure with Dynamic Children</h2>
+
+    <ul class="tree">
+      <li class="tree-toggle collapsed">
+        Parent Node 1
+        <ul>
+          <li>Child A with long dynamic content that can stretch across the container width</li>
+          <li>Child B</li>
+        </ul>
+      </li>
+      <li class="tree-toggle collapsed">
+        Parent Node 2
+        <ul>
+          <li>Sub Item 1</li>
+          <li>Sub Item 2</li>
+        </ul>
+      </li>
+      <li>Standalone Item</li>
+    </ul>
+
+    <script>
+      // Get all toggle elements
+      document.querySelectorAll('.tree-toggle').forEach(function (toggle) {
+        toggle.addEventListener('click', function (e) {
+          // Prevent event bubbling to parent
+          e.stopPropagation()
+
+          const subTree = this.querySelector('ul')
+          const isExpanded = subTree.classList.contains('show')
+
+          if (isExpanded) {
+            subTree.classList.remove('show')
+            this.classList.remove('expanded')
+            this.classList.add('collapsed')
+          } else {
+            subTree.classList.add('show')
+            this.classList.remove('collapsed')
+            this.classList.add('expanded')
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
