@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSS :has() 示例</title>
+    <style>
+      .box2 {
+        color: black;
+        font-weight: normal;
+      }
+
+      body:has(.box-1) .box2 {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box-1">我是 box-1（存在时 box2 变红）</div>
+    <div class="box2">我是 box-2</div>
+  </body>
+</html>
