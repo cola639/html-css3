@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Best Strategy for Width (Responsive Demo) - max-width</title>
+    <style>
+      :root {
+        /* Gutter scales with screen size */
+        --gutter: clamp(12px, 2vw, 24px);
+
+        /* Page width: never too wide */
+        --page-max: 1200px;
+
+        /* Reading width: comfortable line length */
+        --reading-max: 72ch;
+
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --border: #e5e7eb;
+        --text: #0f172a;
+        --muted: #64748b;
+        --radius: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.5;
+      }
+
+      /* ✅ Classic container: max-width + auto margins + simple padding */
+      .page {
+        width: 100%;
+        max-width: var(--page-max);
+        margin: 0 auto;
+        padding: var(--gutter);
+      }
+
+      .top {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: clamp(12px, 2vw, 20px);
+        display: grid;
+        gap: 10px;
+      }
+
+      .hint {
+        color: var(--muted);
+        margin: 0;
+      }
+
+      /* layout: sidebar + content; stacks on smaller laptops */
+      .layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: var(--gutter);
+        margin-top: var(--gutter);
+        align-items: start;
+      }
+
+      .panel {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px;
+      }
+
+      /* text is NOT full width; limit to readable measure */
+      .reading {
+        max-width: var(--reading-max);
+        margin: 0 auto;
+      }
+
+      .reading h2 {
+        margin: 0 0 6px;
+      }
+
+      .reading p {
+        margin: 0 0 10px;
+        color: var(--muted);
+      }
+
+      /* components reflow naturally */
+      .cards {
+        display: grid;
+        gap: var(--gutter);
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        margin-top: var(--gutter);
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        background: #fafafa;
+      }
+
+      .label {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 0 0 6px;
+      }
+
+      /* BAD PRACTICE example: fixed width that can break on laptops */
+      .bad-fixed {
+        width: 980px;
+        border: 1px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 10px;
+        overflow: auto;
+        background: #fff;
+      }
+
+      /* responsive breakpoint: stack at <= 1024px */
+      @media (max-width: 1024px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* optional: slightly wider max on very large screens */
+      @media (min-width: 1600px) {
+        :root {
+          --page-max: 1320px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <section class="top">
+        <h1 style="margin: 0">Best width strategy (laptop-friendly)</h1>
+        <p class="hint">Resize your browser: the page stays centered, text stays readable, cards reflow automatically.</p>
+      </section>
+
+      <section class="layout">
+        <aside class="panel">
+          <h3 style="margin: 0 0 10px">Sidebar</h3>
+          <p class="hint" style="margin: 0">Uses layout grid. Stacks under 1024px.</p>
+          <ul style="margin: 10px 0 0; padding-left: 18px; color: var(--muted)">
+            <li>Fluid gutters</li>
+            <li>No fixed page width</li>
+            <li>Breakpoints only when needed</li>
+          </ul>
+        </aside>
+
+        <main class="panel">
+          <div class="reading">
+            <h2>Readable content width</h2>
+            <p>
+              This paragraph is limited to <b>72ch</b> (characters), so it doesn’t become too wide on 1920px screens. That’s a common best practice
+              for comfortable reading.
+            </p>
+            <p>
+              The overall page container uses:
+              <code>max-width + margin: 0 auto + padding</code>
+              so it fits 1366px laptops and also looks good on bigger monitors.
+            </p>
+          </div>
+
+          <div class="cards">
+            <div class="card">
+              <p class="label">GOOD</p>
+              <b>Fluid container</b>
+              <div style="color: var(--muted)">Centered + max width</div>
+            </div>
+            <div class="card">
+              <p class="label">GOOD</p>
+              <b>Text measure</b>
+              <div style="color: var(--muted)">~65–75ch</div>
+            </div>
+            <div class="card">
+              <p class="label">GOOD</p>
+              <b>Auto grid</b>
+              <div style="color: var(--muted)">auto-fit + minmax</div>
+            </div>
+          </div>
+
+          <div style="margin-top: var(--gutter)">
+            <p class="label">BAD EXAMPLE (fixed width)</p>
+            <div class="bad-fixed">
+              This box is <b>980px fixed</b>. On smaller laptops (or if your window is narrow), it can overflow and cause horizontal scrolling. Avoid
+              fixed page widths like this.
+            </div>
+          </div>
+        </main>
+      </section>
+    </div>
+  </body>
+</html>

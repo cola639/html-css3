@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Responsive Laptop UI Example</title>
+    <style>
+      /* ===== Design tokens (scalable) ===== */
+      :root {
+        --container-max: 1200px;
+        --gutter: clamp(12px, 2vw, 24px);
+        --radius: 14px;
+
+        --text: #0f172a;
+        --muted: #64748b;
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --border: #e2e8f0;
+
+        --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        --fs: clamp(14px, 0.35vw + 12px, 18px);
+        --lh: 1.5;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font);
+        font-size: var(--fs);
+        line-height: var(--lh);
+        color: var(--text);
+        background: var(--bg);
+      }
+
+      /* Centered container that works from 1366px to 4K */
+      .container {
+        width: min(100% - (2 * var(--gutter)), var(--container-max));
+        margin-inline: auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(248, 250, 252, 0.85);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--gutter);
+        padding: calc(var(--gutter) * 0.75) 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 999px;
+        background: #2563eb;
+        display: inline-block;
+      }
+
+      .search {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+      }
+      .search input {
+        width: min(520px, 100%);
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        outline: none;
+        background: white;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+      .btn {
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: white;
+        cursor: pointer;
+      }
+
+      main {
+        padding: var(--gutter) 0 calc(var(--gutter) * 2);
+      }
+
+      /* ===== Layout: sidebar + content on wide screens, stacked on narrow ===== */
+      .layout {
+        display: grid;
+        gap: var(--gutter);
+        grid-template-columns: 280px 1fr;
+        align-items: start;
+      }
+
+      /* Sidebar with <details> becomes “collapsible” naturally */
+      details.sidebar {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: clip;
+      }
+      details.sidebar > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-weight: 700;
+        border-bottom: 1px solid var(--border);
+        user-select: none;
+      }
+      details.sidebar > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .sidebar-body {
+        padding: 14px 16px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .chip-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #f1f5f9;
+        color: var(--text);
+        font-size: 0.95em;
+      }
+
+      .content {
+        display: grid;
+        gap: var(--gutter);
+      }
+
+      .hero {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: clamp(14px, 2vw, 22px);
+        display: grid;
+        gap: 8px;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      /* Responsive cards grid: auto adapts to laptop widths */
+      .cards {
+        display: grid;
+        gap: var(--gutter);
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px;
+        display: grid;
+        gap: 10px;
+        min-height: 140px;
+      }
+      .card h3 {
+        margin: 0;
+        font-size: 1.05em;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .thumb {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: linear-gradient(135deg, #dbeafe, #f1f5f9);
+      }
+
+      /* ===== Breakpoint: smaller laptop widths (e.g., 1366x768 with sidebar) ===== */
+      @media (max-width: 1024px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        /* On narrow screens, keep filters collapsible to save space */
+        details.sidebar {
+          position: static;
+        }
+      }
+
+      /* Extra: improve readability on very wide screens */
+      @media (min-width: 1600px) {
+        :root {
+          --container-max: 1320px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container topbar">
+        <div class="brand"><span class="dot"></span> Dashboard</div>
+
+        <div class="search">
+          <input type="search" placeholder="Search…" aria-label="Search" />
+        </div>
+
+        <div class="actions">
+          <button class="btn" type="button">Help</button>
+          <button class="btn" type="button">Profile</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="layout">
+        <details class="sidebar" open>
+          <summary>Filters</summary>
+          <div class="sidebar-body">
+            <div><strong>Status</strong></div>
+            <div class="chip-row">
+              <span class="chip">All</span>
+              <span class="chip">Active</span>
+              <span class="chip">Paused</span>
+            </div>
+
+            <div style="margin-top: 6px"><strong>Tags</strong></div>
+            <div class="chip-row">
+              <span class="chip">Design</span>
+              <span class="chip">Frontend</span>
+              <span class="chip">Bug</span>
+              <span class="chip">Research</span>
+            </div>
+          </div>
+        </details>
+
+        <section class="content">
+          <div class="hero">
+            <h2 style="margin: 0">Responsive layout for laptop screens</h2>
+            <p>Sidebar + content on wide screens, stacked on smaller widths. Cards auto-reflow using Grid <code>auto-fit + minmax()</code>.</p>
+          </div>
+
+          <div class="cards">
+            <article class="card">
+              <div class="thumb" aria-hidden="true"></div>
+              <h3>Card 1</h3>
+              <p>Auto-resizes from 2–4 columns depending on width.</p>
+            </article>
+            <article class="card">
+              <div class="thumb" aria-hidden="true"></div>
+              <h3>Card 2</h3>
+              <p>Uses fluid spacing and readable max container width.</p>
+            </article>
+            <article class="card">
+              <div class="thumb" aria-hidden="true"></div>
+              <h3>Card 3</h3>
+              <p>Typography scales with <code>clamp()</code>.</p>
+            </article>
+            <article class="card">
+              <div class="thumb" aria-hidden="true"></div>
+              <h3>Card 4</h3>
+              <p>No fixed heights → fewer “breaks” on different laptops.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
