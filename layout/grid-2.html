@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>One Grid Case: Container + 1fr Demo (Adjustable)</title>
+    <style>
+      :root {
+        --viewportW: 980px; /* simulate laptop screen width */
+        --containerMax: 1200px;
+        --pad: 24px;
+        --gap: 16px;
+        --leftFixed: 280px;
+        --rightFr: 1; /* used by JS to build `Xfr` */
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: #f6f7fb;
+        color: #0f172a;
+      }
+
+      .page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .panel {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 16px;
+      }
+
+      .controls {
+        display: grid;
+        gap: 10px;
+      }
+      .control {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px dashed #e5e7eb;
+      }
+      .control:last-child {
+        border-bottom: none;
+      }
+
+      label {
+        font-size: 13px;
+        color: #334155;
+      }
+      input[type='range'] {
+        width: 260px;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        gap: 16px;
+        align-items: start;
+        margin-top: 16px;
+      }
+      @media (max-width: 920px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ======= PREVIEW AREA (simulate screen) ======= */
+      .viewport {
+        width: var(--viewportW);
+        max-width: 100%;
+        margin: 0 auto;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        background: #f8fafc;
+        padding: 16px;
+        overflow: auto; /* if viewportW > available area */
+      }
+
+      /* ======= CORE CONTAINER STRATEGY =======
+         - no explicit width needed
+         - max-width limits on large screens
+         - margin auto centers
+         - padding is fixed (your preference)
+      */
+      .container {
+        max-width: var(--containerMax);
+        margin: 0 auto;
+        padding: var(--pad);
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+      }
+
+      /* ======= CORE GRID STRATEGY =======
+         - left fixed
+         - right uses fr (fills remaining space)
+      */
+      .grid {
+        display: grid;
+        gap: var(--gap);
+        /* grid-template-columns is set by JS so we can adjust fr ratio easily */
+        background: #f8fafc;
+        border: 1px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 12px;
+      }
+
+      .box {
+        background: #fff;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        padding: 12px;
+        font-weight: 700;
+        min-height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0; /* important: allow content to shrink in grid */
+      }
+
+      .code {
+        margin-top: 12px;
+        border-radius: 12px;
+        padding: 12px;
+        background: #0b1220;
+        color: #e5e7eb;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+        font-size: 12px;
+        line-height: 1.5;
+        overflow: auto;
+      }
+
+      .meta {
+        margin: 10px 0 0;
+        color: #64748b;
+        font-size: 13px;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border: 1px solid #e5e7eb;
+        border-radius: 999px;
+        background: #fff;
+        font-size: 12px;
+        color: #334155;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="panel">
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center">
+          <h1 style="margin: 0; font-size: 18px">One Case: Container + Grid (fixed + fr)</h1>
+          <span class="badge">Adjust values</span>
+          <span class="badge">Preview container + core CSS</span>
+        </div>
+        <p class="meta" style="margin-top: 8px">
+          The “viewport” box simulates laptop widths. The container uses <b>max-width + margin auto + padding</b>. The grid uses <b>left fixed</b> +
+          <b>right fr</b>.
+        </p>
+
+        <div class="layout">
+          <!-- Controls -->
+          <div class="controls">
+            <div class="control">
+              <label
+                >Simulated viewport width: <b><span id="vW"></span>px</b></label
+              >
+              <input id="viewportW" type="range" min="520" max="1500" value="980" />
+            </div>
+
+            <div class="control">
+              <label
+                >Container max-width: <b><span id="cMax"></span>px</b></label
+              >
+              <input id="containerMax" type="range" min="800" max="1440" value="1200" />
+            </div>
+
+            <div class="control">
+              <label
+                >Container padding: <b><span id="pad"></span>px</b></label
+              >
+              <input id="padInput" type="range" min="0" max="48" value="24" />
+            </div>
+
+            <div class="control">
+              <label
+                >Grid gap: <b><span id="gap"></span>px</b></label
+              >
+              <input id="gapInput" type="range" min="0" max="48" value="16" />
+            </div>
+
+            <div class="control">
+              <label
+                >Left column fixed: <b><span id="left"></span>px</b></label
+              >
+              <input id="leftFixed" type="range" min="160" max="420" value="280" />
+            </div>
+
+            <div class="control">
+              <label
+                >Right column fr: <b><span id="fr"></span>fr</b></label
+              >
+              <input id="rightFr" type="range" min="1" max="4" step="1" value="1" />
+            </div>
+
+            <p class="meta">Tip: many real sites keep <b>padding fixed</b> (16/24) for consistency, and only change it at breakpoints.</p>
+          </div>
+
+          <!-- Preview -->
+          <div>
+            <div class="viewport" id="viewport">
+              <div class="container" id="container">
+                <div class="grid" id="grid">
+                  <div class="box" id="colA">Left (fixed)</div>
+                  <div class="box" id="colB">Right (fr fills remaining)</div>
+                </div>
+
+                <p class="meta" id="measure" style="margin-top: 12px"></p>
+
+                <pre class="code" id="cssPreview"></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const root = document.documentElement
+
+      const els = {
+        viewportW: document.getElementById('viewportW'),
+        containerMax: document.getElementById('containerMax'),
+        padInput: document.getElementById('padInput'),
+        gapInput: document.getElementById('gapInput'),
+        leftFixed: document.getElementById('leftFixed'),
+        rightFr: document.getElementById('rightFr'),
+
+        vW: document.getElementById('vW'),
+        cMax: document.getElementById('cMax'),
+        pad: document.getElementById('pad'),
+        gap: document.getElementById('gap'),
+        left: document.getElementById('left'),
+        fr: document.getElementById('fr'),
+
+        viewport: document.getElementById('viewport'),
+        container: document.getElementById('container'),
+        grid: document.getElementById('grid'),
+        colA: document.getElementById('colA'),
+        colB: document.getElementById('colB'),
+
+        measure: document.getElementById('measure'),
+        cssPreview: document.getElementById('cssPreview')
+      }
+
+      function setVar(name, value) {
+        root.style.setProperty(name, value)
+      }
+
+      function update() {
+        const viewportW = Number(els.viewportW.value)
+        const containerMax = Number(els.containerMax.value)
+        const pad = Number(els.padInput.value)
+        const gap = Number(els.gapInput.value)
+        const leftFixed = Number(els.leftFixed.value)
+        const rightFr = Number(els.rightFr.value)
+
+        setVar('--viewportW', viewportW + 'px')
+        setVar('--containerMax', containerMax + 'px')
+        setVar('--pad', pad + 'px')
+        setVar('--gap', gap + 'px')
+        setVar('--leftFixed', leftFixed + 'px')
+        setVar('--rightFr', rightFr)
+
+        // Set grid-template-columns dynamically so fr ratio can change
+        els.grid.style.gridTemplateColumns = `${leftFixed}px ${rightFr}fr`
+
+        // Update labels
+        els.vW.textContent = viewportW
+        els.cMax.textContent = containerMax
+        els.pad.textContent = pad
+        els.gap.textContent = gap
+        els.left.textContent = leftFixed
+        els.fr.textContent = rightFr
+
+        // Measure actual rendered sizes
+        const containerRect = els.container.getBoundingClientRect()
+        const aRect = els.colA.getBoundingClientRect()
+        const bRect = els.colB.getBoundingClientRect()
+
+        els.measure.innerHTML =
+          `Rendered container width: <b>${Math.round(containerRect.width)}px</b> | ` +
+          `Column widths: <b>${Math.round(aRect.width)}px</b> + <b>${Math.round(bRect.width)}px</b>`
+
+        // Show "core CSS" preview (container + grid)
+        els.cssPreview.textContent = `.container {
+  max-width: ${containerMax}px;
+  margin: 0 auto;
+  padding: ${pad}px;
+}
+
+.grid {
+  display: grid;
+  gap: ${gap}px;
+  grid-template-columns: ${leftFixed}px ${rightFr}fr;
+}`
+      }
+
+      ;[els.viewportW, els.containerMax, els.padInput, els.gapInput, els.leftFixed, els.rightFr].forEach(input =>
+        input.addEventListener('input', update)
+      )
+
+      window.addEventListener('resize', update)
+      update()
+    </script>
+  </body>
+</html>

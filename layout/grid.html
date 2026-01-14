@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSS Grid Interactive Playground (Multiple Cases)</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: #f6f7fb;
+        color: #0f172a;
+      }
+
+      .page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      h1 {
+        margin: 0 0 10px;
+      }
+      .sub {
+        margin: 0 0 18px;
+        color: #64748b;
+      }
+
+      .case {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 16px;
+        margin: 16px 0;
+      }
+
+      .case h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 360px 1fr;
+        gap: 16px;
+        align-items: start;
+      }
+
+      @media (max-width: 900px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .controls {
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 12px;
+        background: #fafafa;
+      }
+
+      .control {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px dashed #e5e7eb;
+      }
+      .control:last-child {
+        border-bottom: none;
+      }
+
+      label {
+        color: #334155;
+        font-size: 13px;
+      }
+      input[type='range'] {
+        width: 180px;
+      }
+      select,
+      button,
+      input[type='number'],
+      input[type='text'] {
+        padding: 8px 10px;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        background: #fff;
+      }
+      button {
+        cursor: pointer;
+      }
+
+      .demoWrap {
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 12px;
+        background: #fff;
+      }
+
+      .demoTitle {
+        margin: 0 0 8px;
+        color: #64748b;
+        font-size: 13px;
+      }
+
+      .grid {
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 12px;
+        background: #f8fafc;
+        min-height: 180px;
+      }
+
+      .item {
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        background: #ffffff;
+        padding: 10px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .code {
+        margin-top: 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        background: #0b1220;
+        color: #e5e7eb;
+        padding: 12px;
+        overflow: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .value {
+        font-size: 12px;
+        color: #64748b;
+        padding-left: 8px;
+      }
+
+      /* ---------- CASE 1: template columns ---------- */
+      .case1 .grid {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(var(--cols), minmax(var(--minW), 1fr));
+      }
+
+      /* ---------- CASE 2: gap (row/column) ---------- */
+      .case2 .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        row-gap: var(--rowGap);
+        column-gap: var(--colGap);
+      }
+
+      /* ---------- CASE 3: align/justify items ---------- */
+      .case3 .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        justify-items: var(--justifyItems);
+        align-items: var(--alignItems);
+        min-height: 240px;
+      }
+      .case3 .item {
+        width: 100%;
+      }
+      .case3 .item.small {
+        width: 70%;
+      } /* to make justify-items visible */
+      .case3 .item.tall {
+        padding: 22px 10px;
+      } /* to make align-items visible */
+
+      /* ---------- CASE 4: auto placement + dense ---------- */
+      .case4 .grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        grid-auto-rows: 56px;
+        gap: 12px;
+        grid-auto-flow: var(--autoFlow);
+        min-height: 300px;
+      }
+      .case4 .item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .span2 {
+        grid-column: span 2;
+      }
+      .span3 {
+        grid-column: span 3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <h1>CSS Grid Interactive Playground</h1>
+      <p class="sub">Each section is a separate “case”. Change values and watch the layout update.</p>
+
+      <!-- ================= CASE 1 ================= -->
+      <section class="case case1" style="--cols: 4; --minW: 140px">
+        <h2>Case 1: <code>grid-template-columns</code> (repeat + minmax)</h2>
+
+        <div class="row">
+          <div class="controls">
+            <div class="control">
+              <label> Columns: <span class="value" data-readout="cols"></span> </label>
+              <input type="range" min="1" max="6" value="4" data-var="--cols" data-readout="cols" />
+            </div>
+
+            <div class="control">
+              <label> Min column width: <span class="value" data-readout="minW"></span> </label>
+              <input type="range" min="80" max="260" value="140" data-var="--minW" data-unit="px" data-readout="minW" />
+            </div>
+
+            <p class="sub" style="margin: 10px 0 0">Strategy: use <code>repeat(n, minmax(min, 1fr))</code> so columns stay flexible.</p>
+          </div>
+
+          <div class="demoWrap">
+            <p class="demoTitle">Demo</p>
+            <div class="grid" data-grid>
+              <div class="item">1</div>
+              <div class="item">2</div>
+              <div class="item">3</div>
+              <div class="item">4</div>
+              <div class="item">5</div>
+              <div class="item">6</div>
+              <div class="item">7</div>
+              <div class="item">8</div>
+            </div>
+            <pre class="code" data-code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CASE 2 ================= -->
+      <section class="case case2" style="--rowGap: 12px; --colGap: 12px">
+        <h2>Case 2: <code>row-gap</code> / <code>column-gap</code></h2>
+
+        <div class="row">
+          <div class="controls">
+            <div class="control">
+              <label> Row gap: <span class="value" data-readout="rowGap"></span> </label>
+              <input type="range" min="0" max="40" value="12" data-var="--rowGap" data-unit="px" data-readout="rowGap" />
+            </div>
+
+            <div class="control">
+              <label> Column gap: <span class="value" data-readout="colGap"></span> </label>
+              <input type="range" min="0" max="60" value="12" data-var="--colGap" data-unit="px" data-readout="colGap" />
+            </div>
+
+            <p class="sub" style="margin: 10px 0 0">Tip: gaps usually feel better when they’re consistent across the page.</p>
+          </div>
+
+          <div class="demoWrap">
+            <p class="demoTitle">Demo</p>
+            <div class="grid" data-grid>
+              <div class="item">A</div>
+              <div class="item">B</div>
+              <div class="item">C</div>
+              <div class="item">D</div>
+              <div class="item">E</div>
+              <div class="item">F</div>
+              <div class="item">G</div>
+              <div class="item">H</div>
+            </div>
+            <pre class="code" data-code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CASE 3 ================= -->
+      <section class="case case3" style="--justifyItems: stretch; --alignItems: stretch">
+        <h2>Case 3: <code>justify-items</code> & <code>align-items</code></h2>
+
+        <div class="row">
+          <div class="controls">
+            <div class="control">
+              <label>justify-items</label>
+              <select data-prop="justifyItems">
+                <option value="stretch" selected>stretch</option>
+                <option value="start">start</option>
+                <option value="center">center</option>
+                <option value="end">end</option>
+              </select>
+            </div>
+
+            <div class="control">
+              <label>align-items</label>
+              <select data-prop="alignItems">
+                <option value="stretch" selected>stretch</option>
+                <option value="start">start</option>
+                <option value="center">center</option>
+                <option value="end">end</option>
+              </select>
+            </div>
+
+            <p class="sub" style="margin: 10px 0 0">We made some items narrower/taller so you can clearly see alignment changes.</p>
+          </div>
+
+          <div class="demoWrap">
+            <p class="demoTitle">Demo</p>
+            <div class="grid" data-grid>
+              <div class="item small">1</div>
+              <div class="item">2</div>
+              <div class="item tall small">3</div>
+              <div class="item">4</div>
+              <div class="item">5</div>
+              <div class="item small">6</div>
+              <div class="item">7</div>
+              <div class="item tall">8</div>
+            </div>
+            <pre class="code" data-code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= CASE 4 ================= -->
+      <section class="case case4" style="--autoFlow: row">
+        <h2>Case 4: <code>grid-auto-flow</code> (row / column / dense)</h2>
+
+        <div class="row">
+          <div class="controls">
+            <div class="control">
+              <label>grid-auto-flow</label>
+              <select data-prop="autoFlow">
+                <option value="row" selected>row</option>
+                <option value="column">column</option>
+                <option value="row dense">row dense</option>
+                <option value="column dense">column dense</option>
+              </select>
+            </div>
+
+            <div class="control">
+              <label>Try changing spans</label>
+              <div style="display: flex; gap: 10px">
+                <button type="button" data-action="toggleSpans">Toggle spans</button>
+                <button type="button" data-action="resetSpans">Reset</button>
+              </div>
+            </div>
+
+            <p class="sub" style="margin: 10px 0 0">Dense tries to fill gaps (use carefully; it can reorder visually).</p>
+          </div>
+
+          <div class="demoWrap">
+            <p class="demoTitle">Demo</p>
+            <div class="grid" data-grid>
+              <div class="item" data-i="1">1</div>
+              <div class="item" data-i="2">2</div>
+              <div class="item" data-i="3">3</div>
+              <div class="item" data-i="4">4</div>
+              <div class="item" data-i="5">5</div>
+              <div class="item" data-i="6">6</div>
+              <div class="item" data-i="7">7</div>
+              <div class="item" data-i="8">8</div>
+              <div class="item" data-i="9">9</div>
+              <div class="item" data-i="10">10</div>
+            </div>
+            <pre class="code" data-code></pre>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      function updateCode(section) {
+        const codeEl = section.querySelector('[data-code]')
+        if (!codeEl) return
+
+        const grid = section.querySelector('[data-grid]')
+        const cs = getComputedStyle(grid)
+
+        // Show the main properties for THIS case (simple + useful)
+        const lines = ['.grid {', `  display: grid;`]
+
+        // Case-specific important props
+        if (section.classList.contains('case1')) {
+          lines.push(`  grid-template-columns: ${cs.gridTemplateColumns};`)
+          lines.push(`  gap: ${cs.gap};`)
+        }
+
+        if (section.classList.contains('case2')) {
+          lines.push(`  grid-template-columns: ${cs.gridTemplateColumns};`)
+          lines.push(`  row-gap: ${cs.rowGap};`)
+          lines.push(`  column-gap: ${cs.columnGap};`)
+        }
+
+        if (section.classList.contains('case3')) {
+          lines.push(`  grid-template-columns: ${cs.gridTemplateColumns};`)
+          lines.push(`  gap: ${cs.gap};`)
+          lines.push(`  justify-items: ${cs.justifyItems};`)
+          lines.push(`  align-items: ${cs.alignItems};`)
+        }
+
+        if (section.classList.contains('case4')) {
+          lines.push(`  grid-template-columns: ${cs.gridTemplateColumns};`)
+          lines.push(`  grid-auto-rows: ${cs.gridAutoRows};`)
+          lines.push(`  gap: ${cs.gap};`)
+          lines.push(`  grid-auto-flow: ${cs.gridAutoFlow};`)
+          lines.push('}')
+          lines.push('')
+          lines.push('/* spans (some items may have): */')
+          lines.push('.span2 { grid-column: span 2; }')
+          lines.push('.span3 { grid-column: span 3; }')
+
+          codeEl.textContent = lines.join('\n')
+          return
+        }
+
+        lines.push('}')
+        codeEl.textContent = lines.join('\n')
+      }
+
+      function updateReadouts(section) {
+        section.querySelectorAll('[data-readout]').forEach(el => {
+          const key = el.getAttribute('data-readout')
+          // Find matching input for this readout
+          const input = section.querySelector(`[data-readout="${key}"][data-var]`)
+          if (!input) return
+          const unit = input.getAttribute('data-unit') || ''
+          el.textContent = input.value + unit
+        })
+      }
+
+      function initSection(section) {
+        updateReadouts(section)
+        updateCode(section)
+
+        // Range inputs -> CSS variables
+        section.querySelectorAll('input[type="range"][data-var]').forEach(input => {
+          const varName = input.getAttribute('data-var')
+          const unit = input.getAttribute('data-unit') || ''
+          section.style.setProperty(varName, input.value + unit)
+
+          input.addEventListener('input', e => {
+            section.style.setProperty(varName, e.target.value + unit)
+            updateReadouts(section)
+            updateCode(section)
+          })
+        })
+
+        // Selects -> CSS variables (mapped)
+        section.querySelectorAll('select[data-prop]').forEach(sel => {
+          const prop = sel.getAttribute('data-prop')
+
+          // initial apply
+          section.style.setProperty(`--${prop}`, sel.value)
+
+          sel.addEventListener('change', e => {
+            section.style.setProperty(`--${prop}`, e.target.value)
+
+            // map to real vars used in CSS
+            // (case3 uses --justifyItems / --alignItems, case4 uses --autoFlow)
+            if (section.classList.contains('case3')) {
+              if (prop === 'justifyItems') section.style.setProperty('--justifyItems', e.target.value)
+              if (prop === 'alignItems') section.style.setProperty('--alignItems', e.target.value)
+            }
+            if (section.classList.contains('case4')) {
+              if (prop === 'autoFlow') section.style.setProperty('--autoFlow', e.target.value)
+            }
+
+            updateCode(section)
+          })
+        })
+
+        // Buttons for case4
+        if (section.classList.contains('case4')) {
+          const grid = section.querySelector('[data-grid]')
+          const toggleBtn = section.querySelector('[data-action="toggleSpans"]')
+          const resetBtn = section.querySelector('[data-action="resetSpans"]')
+
+          let toggled = false
+
+          function applySpans(on) {
+            // Make a few items span to create gaps.
+            const i2 = grid.querySelector('[data-i="2"]')
+            const i4 = grid.querySelector('[data-i="4"]')
+            const i7 = grid.querySelector('[data-i="7"]')
+
+            grid.querySelectorAll('.item').forEach(el => el.classList.remove('span2', 'span3'))
+
+            if (on) {
+              i2.classList.add('span3')
+              i4.classList.add('span2')
+              i7.classList.add('span2')
+            }
+            updateCode(section)
+          }
+
+          toggleBtn?.addEventListener('click', () => {
+            toggled = !toggled
+            applySpans(toggled)
+          })
+
+          resetBtn?.addEventListener('click', () => {
+            toggled = false
+            applySpans(false)
+          })
+
+          applySpans(false)
+        }
+      }
+
+      document.querySelectorAll('.case').forEach(initSection)
+    </script>
+  </body>
+</html>

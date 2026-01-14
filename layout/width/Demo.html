@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Responsive Width Strategy Demo</title>
+    <style>
+      :root {
+        /* ====== Width strategy (ancestor container) ====== */
+        --container-max: 1280px; /* limit on big screens */
+        --container-small-fixed: 1024px; /* fixed width when screen is small */
+
+        /* ====== Spacing ====== */
+        --gap: 16px; /* dynamic gaps between boxes */
+        --pad: 24px; /* fixed padding for the container (you asked "simple padding") */
+
+        /* ====== Visuals (just for demo) ====== */
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --border: #e5e7eb;
+        --text: #0f172a;
+        --muted: #64748b;
+        --radius: 14px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      /* If container becomes wider than viewport (small screens), allow horizontal scroll */
+      body {
+        overflow-x: auto;
+      }
+
+      /* ====== Ancestor container ======
+         - default: fluid until max-width
+         - centered with margin auto
+         - fixed padding (simple)
+      */
+      .shell {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: var(--pad);
+      }
+
+      /* When viewport is smaller than your "stable layout width",
+         force a fixed container width so layout doesn't collapse */
+      @media (max-width: 1100px) {
+        .shell {
+          width: var(--container-small-fixed);
+        }
+      }
+
+      /* Optional: reduce padding on small screens (still fixed, just a different fixed value) */
+      @media (max-width: 1100px) {
+        :root {
+          --pad: 16px;
+        }
+      }
+
+      /* ====== Your page layout (like the sketch) ======
+         Left column: box1 (top), box2 (bottom)
+         Right column: top row (3/4 stacked + 5), then 6, then 7
+      */
+      .layout {
+        display: grid;
+        gap: var(--gap);
+
+        /* Left column is flexible but has a sensible min/max.
+           Right column takes remaining space. */
+        grid-template-columns: minmax(240px, 320px) 1fr;
+        align-items: start;
+      }
+
+      /* Left column: 1 and 2 stacked */
+      .left {
+        display: grid;
+        gap: var(--gap);
+      }
+
+      /* Right column: top group + 6 + 7 stacked */
+      .right {
+        display: grid;
+        gap: var(--gap);
+      }
+
+      /* Right top row:
+         - left: small stack (3 and 4)
+         - right: big (5) */
+      .rightTop {
+        display: grid;
+        gap: var(--gap);
+        grid-template-columns: minmax(140px, 200px) 1fr;
+        align-items: stretch;
+      }
+
+      .smallStack {
+        display: grid;
+        gap: var(--gap);
+      }
+
+      /* ====== Cards ====== */
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+      }
+
+      /* Give cards “demo heights” but keep them flexible.
+         In real apps: content usually defines height. */
+      .h-sm {
+        min-height: 90px;
+      }
+      .h-md {
+        min-height: 160px;
+      }
+      .h-lg {
+        min-height: 220px;
+      }
+
+      /* Just for helping you see behavior */
+      .note {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* If you ever want a real responsive collapse instead of fixed-width scroll,
+         you can switch to this pattern:
+         @media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } }
+      */
+    </style>
+  </head>
+
+  <body>
+    <div class="shell">
+      <p class="note">
+        Resize the browser. Big screens are limited by <b>max-width</b>. Smaller screens use a <b>fixed container width</b> (1024px) to keep the
+        layout stable (scroll if needed). Children use <b>CSS Grid</b> so they stay dynamic.
+      </p>
+
+      <div class="layout">
+        <!-- LEFT COLUMN -->
+        <div class="left">
+          <div class="card h-md">1</div>
+          <div class="card h-lg">2</div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="right">
+          <div class="rightTop">
+            <div class="smallStack">
+              <div class="card h-sm">3</div>
+              <div class="card h-sm">4</div>
+            </div>
+            <div class="card h-md">5</div>
+          </div>
+
+          <div class="card h-md">6</div>
+          <div class="card h-md">7</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
