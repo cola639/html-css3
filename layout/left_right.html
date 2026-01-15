@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid Layout Auto Content + Rest Space</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, Arial;
+        background: #f6f7fb;
+      }
+
+      .wrap {
+        width: 1000px; /* demo width */
+        margin: 40px auto;
+        padding: 20px; /* outer 20px */
+        border: 4px solid #111;
+        border-radius: 14px;
+        background: #fff;
+      }
+
+      .wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 200px) 1fr; /* ✅ left = content width, right = rest */
+        gap: 20px; /* middle 20px */
+        align-items: stretch;
+      }
+
+      .left {
+        border: 4px solid #111;
+        border-radius: 14px;
+        padding: 16px;
+        font-size: 22px;
+        font-weight: 700;
+        background: #fff;
+      }
+
+      .right {
+        border: 4px solid #111;
+        border-radius: 14px;
+        min-height: 280px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        font-weight: 700;
+
+        min-width: 0; /* ✅ important: allow the 1fr column to shrink correctly */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="left">text content (auto width)</div>
+      <div class="right">rest space</div>
+    </div>
+  </body>
+</html>
