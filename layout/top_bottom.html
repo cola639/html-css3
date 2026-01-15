@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Equal Height Rows (Grid)</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, Arial;
+        background: #f6f7fb;
+      }
+
+      .wrap {
+        width: 420px;
+        height: 600px; /* ✅ must set a height to make 1fr work */
+        margin: 40px auto;
+        padding: 20px;
+        border: 4px solid #111;
+        border-radius: 14px;
+        background: #fff;
+
+        display: grid;
+        gap: 20px;
+        grid-template-rows: 1fr 1fr; /* ✅ equal height */
+      }
+
+      .box {
+        border: 4px solid #111;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="box">box1</div>
+      <div class="box">box2</div>
+    </div>
+  </body>
+</html>

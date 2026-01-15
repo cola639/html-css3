@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dice 1–6 with Flex</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #000;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      }
+
+      /* 6 dice on a 3x2 board (just for preview) */
+      .board {
+        display: flex;
+        flex-wrap: wrap;
+        width: 640px;
+        gap: 120px 180px;
+        padding: 40px;
+        justify-content: space-between;
+      }
+
+      /* Die base */
+      .die {
+        width: 96px;
+        height: 96px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 12px;
+
+        /* Flex layout */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* left/right columns */
+        align-content: space-between; /* top/middle/bottom rows */
+      }
+
+      /* each cell in a 3x3 visual grid */
+      .cell {
+        width: calc((96px - 24px - 0px) / 3); /* (die - padding*2) / 3 */
+        height: calc((96px - 24px - 0px) / 3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .pip {
+        width: 16px;
+        height: 16px;
+        border-radius: 999px;
+      }
+      .red {
+        background: #e11d48;
+      }
+      .blue {
+        background: #1d4ed8;
+      }
+
+      /* helpers */
+      .empty .pip {
+        display: none;
+      }
+
+      /* Make the middle column “centered” cells still align nicely */
+      .centerCol {
+        justify-content: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="board">
+      <!-- 1: center -->
+      <div class="die" aria-label="dice 1">
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell centerCol"><span class="pip red"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+      </div>
+
+      <!-- 2: top-center, bottom-center -->
+      <div class="die" aria-label="dice 2">
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell centerCol"><span class="pip blue"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell centerCol"><span class="pip blue"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+      </div>
+
+      <!-- 3: top-left, center, bottom-right -->
+      <div class="die" aria-label="dice 3">
+        <div class="cell"><span class="pip blue"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell centerCol"><span class="pip blue"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell"><span class="pip blue"></span></div>
+      </div>
+
+      <!-- 4: four corners -->
+      <div class="die" aria-label="dice 4">
+        <div class="cell"><span class="pip red"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell"><span class="pip red"></span></div>
+
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+
+        <div class="cell"><span class="pip red"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell"><span class="pip red"></span></div>
+      </div>
+
+      <!-- 5: four corners + center -->
+      <div class="die" aria-label="dice 5">
+        <div class="cell"><span class="pip blue"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell"><span class="pip blue"></span></div>
+
+        <div class="cell empty"><span class="pip"></span></div>
+        <div class="cell centerCol"><span class="pip blue"></span></div>
+        <div class="cell empty"><span class="pip"></span></div>
+
+        <div class="cell"><span class="pip blue"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell"><span class="pip blue"></span></div>
+      </div>
+
+      <!-- 6: left column 3 + right column 3 -->
+      <div class="die" aria-label="dice 6">
+        <div class="cell"><span class="pip blue"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell"><span class="pip blue"></span></div>
+
+        <div class="cell"><span class="pip blue"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell"><span class="pip blue"></span></div>
+
+        <div class="cell"><span class="pip blue"></span></div>
+        <div class="cell empty centerCol"><span class="pip"></span></div>
+        <div class="cell"><span class="pip blue"></span></div>
+      </div>
+    </div>
+  </body>
+</html>

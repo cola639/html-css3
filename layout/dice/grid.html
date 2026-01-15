@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dice 1–6 with CSS Grid</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #000;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      }
+
+      /* Layout the 6 dice like your image (3 columns x 2 rows) */
+      .board {
+        display: grid;
+        grid-template-columns: repeat(3, 140px);
+        gap: 80px 160px;
+        padding: 40px;
+      }
+
+      /* Each die is a 3x3 grid */
+      .die {
+        width: 96px;
+        height: 96px;
+        background: #fff;
+        border-radius: 16px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        place-items: center;
+      }
+
+      .pip {
+        width: 16px;
+        height: 16px;
+        border-radius: 999px;
+      }
+
+      /* pip colors (optional) */
+      .red {
+        background: #e11d48;
+      }
+      .blue {
+        background: #1d4ed8;
+      }
+
+      /* Grid positions for pips */
+      .tl {
+        grid-area: 1 / 1;
+      } /* top-left */
+      .tc {
+        grid-area: 1 / 2;
+      } /* top-center */
+      .tr {
+        grid-area: 1 / 3;
+      } /* top-right */
+
+      .ml {
+        grid-area: 2 / 1;
+      } /* mid-left */
+      .mc {
+        grid-area: 2 / 2;
+      } /* mid-center */
+      .mr {
+        grid-area: 2 / 3;
+      } /* mid-right */
+
+      .bl {
+        grid-area: 3 / 1;
+      } /* bottom-left */
+      .bc {
+        grid-area: 3 / 2;
+      } /* bottom-center */
+      .br {
+        grid-area: 3 / 3;
+      } /* bottom-right */
+    </style>
+  </head>
+
+  <body>
+    <div class="board">
+      <!-- 1 -->
+      <div class="die">
+        <span class="pip red mc"></span>
+      </div>
+
+      <!-- 2 -->
+      <div class="die">
+        <span class="pip blue tc"></span>
+        <span class="pip blue bc"></span>
+      </div>
+
+      <!-- 3 -->
+      <div class="die">
+        <span class="pip blue tl"></span>
+        <span class="pip blue mc"></span>
+        <span class="pip blue br"></span>
+      </div>
+
+      <!-- 4 -->
+      <div class="die">
+        <span class="pip red tl"></span>
+        <span class="pip red tr"></span>
+        <span class="pip red bl"></span>
+        <span class="pip red br"></span>
+      </div>
+
+      <!-- 5 -->
+      <div class="die">
+        <span class="pip blue tl"></span>
+        <span class="pip blue tr"></span>
+        <span class="pip blue mc"></span>
+        <span class="pip blue bl"></span>
+        <span class="pip blue br"></span>
+      </div>
+
+      <!-- 6 -->
+      <div class="die">
+        <span class="pip blue tl"></span>
+        <span class="pip blue ml"></span>
+        <span class="pip blue bl"></span>
+
+        <span class="pip blue tr"></span>
+        <span class="pip blue mr"></span>
+        <span class="pip blue br"></span>
+      </div>
+    </div>
+  </body>
+</html>
