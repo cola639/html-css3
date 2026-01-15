@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Box1 height drives Right (Box2 + 20px + Box3)</title>
+    <style>
+      :root {
+        --pad: 20px; /* padding both 20px */
+        --gap: 20px; /* the “+ 20px” between box2 and box3 (and between columns) */
+        --tileGap: 10px; /* gap between small tiles inside box2/box3 */
+        --radius: 12px;
+        --border: #cbd5e1;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: #f6f7fb;
+      }
+
+      /* Parent layout: Box1 (left) + Right column (right) */
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: var(--gap);
+        padding: var(--pad);
+        align-items: stretch; /* KEY: right column becomes same height as box1 */
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Box 1: height decided by content */
+      .box1 {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: white;
+        padding: var(--pad);
+      }
+
+      /* Right container: stretches to match box1 height */
+      .right {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: white;
+        padding: var(--pad);
+
+        display: grid;
+        grid-template-rows: 1fr 1fr; /* box2 region 50% + box3 region 50% */
+        gap: var(--gap); /* the “+ 20px” between box2 and box3 */
+      }
+
+      /* Box2 region / Box3 region */
+      .group {
+        padding: 12px;
+
+        /* IMPORTANT: make children (tiles) stretch to same height inside this region */
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr)); /* 6 tiles */
+        gap: var(--tileGap);
+        align-items: stretch;
+      }
+
+      /* Each small tile has Top + Bottom (50%/50%) */
+      .tile {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden; /* so rounded corners clip inner colors */
+        background: white;
+
+        display: grid;
+        grid-template-rows: 1fr 1fr; /* Top 50%, Bottom 50% */
+      }
+
+      .tileTop {
+        background: #334155;
+        color: white;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .tileBottom {
+        background: #16a34a;
+        color: white;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* just to make box3 look different */
+      .group.bottom .tileBottom {
+        background: #dc2626;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="layout">
+      <div class="box1">
+        <h3 style="margin: 0 0 10px">Box 1 (content decides height)</h3>
+        <p style="margin: 0">
+          Box 1 height is decided by text content.<br />
+          Right side will stretch to the same height.<br /><br />
+          More text... More text... More text...<br />
+          More text... More text... More text...<br />
+          More text... More text... More text... More text... More text... More text...<br />
+          More text... More text... More text...
+        </p>
+      </div>
+
+      <div class="right">
+        <!-- BOX 2 REGION (top half) contains 6 tiles -->
+        <div class="group top">
+          <div class="tile">
+            <div class="tileTop">Top 1</div>
+            <div class="tileBottom">Bottom 1</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 2</div>
+            <div class="tileBottom">Bottom 2</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 3</div>
+            <div class="tileBottom">Bottom 3</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 4</div>
+            <div class="tileBottom">Bottom 4</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 5</div>
+            <div class="tileBottom">Bottom 5</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 6</div>
+            <div class="tileBottom">Bottom 6</div>
+          </div>
+        </div>
+
+        <!-- BOX 3 REGION (bottom half) contains 6 tiles -->
+        <div class="group bottom">
+          <div class="tile">
+            <div class="tileTop">Top 1</div>
+            <div class="tileBottom">Bottom 1</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 2</div>
+            <div class="tileBottom">Bottom 2</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 3</div>
+            <div class="tileBottom">Bottom 3</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 4</div>
+            <div class="tileBottom">Bottom 4</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 5</div>
+            <div class="tileBottom">Bottom 5</div>
+          </div>
+          <div class="tile">
+            <div class="tileTop">Top 6</div>
+            <div class="tileBottom">Bottom 6</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
