@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laptop/PC Draft UI Strategy</title>
+    <style>
+      :root {
+        --pad: 20px;
+        --gap: 20px;
+        --container-max: 1280px;
+        --border: #e5e7eb;
+        --bg: #f6f7fb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: var(--bg);
+      }
+
+      /* ✅ Main container: supports 1300px–2K by limiting max width */
+      .container {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: var(--pad);
+      }
+
+      /* Optional: slightly wider on very large screens */
+      @media (min-width: 1600px) {
+        :root {
+          --container-max: 1440px;
+        }
+      }
+
+      /* ✅ Common layout: sidebar + main, both flexible */
+      .layout {
+        display: grid;
+        gap: var(--gap);
+        grid-template-columns: minmax(280px, 360px) 1fr;
+        align-items: start;
+      }
+
+      /* ✅ Responsive: if window becomes smaller, stack */
+      @media (max-width: 1100px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 14px;
+      }
+
+      /* ✅ “Stable but responsive” heights */
+      .sidebar {
+        height: clamp(480px, 70vh, 820px);
+        overflow: auto;
+      }
+
+      .main {
+        display: grid;
+        gap: var(--gap);
+      }
+
+      .mainTop {
+        height: clamp(220px, 30vh, 360px);
+      }
+
+      .mainBottom {
+        height: clamp(240px, 40vh, 520px);
+        overflow: auto;
+      }
+
+      .title {
+        margin: 0 0 8px;
+        font-size: 14px;
+        color: #334155;
+      }
+
+      .row {
+        padding: 10px;
+        border: 1px dashed var(--border);
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background: #fafafa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="layout">
+        <aside class="card sidebar">
+          <h3 class="title">Sidebar (clamp height)</h3>
+          <div class="row">Fixed padding: 20px</div>
+          <div class="row">Sidebar width: minmax(280px, 360px)</div>
+          <div class="row">Height: clamp(480px, 70vh, 820px)</div>
+          <div class="row">Scroll when needed</div>
+          <div class="row">More content…</div>
+          <div class="row">More content…</div>
+          <div class="row">More content…</div>
+          <div class="row">More content…</div>
+        </aside>
+
+        <main class="main">
+          <section class="card mainTop">
+            <h3 class="title">Top Panel (clamp height)</h3>
+            <div class="row">Height: clamp(220px, 30vh, 360px)</div>
+          </section>
+
+          <section class="card mainBottom">
+            <h3 class="title">Bottom Panel (clamp height + scroll)</h3>
+            <div class="row">Height: clamp(240px, 40vh, 520px)</div>
+            <div class="row">Long content scrolls instead of breaking layout</div>
+            <div class="row">Item…</div>
+            <div class="row">Item…</div>
+            <div class="row">Item…</div>
+            <div class="row">Item…</div>
+            <div class="row">Item…</div>
+            <div class="row">Item…</div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
