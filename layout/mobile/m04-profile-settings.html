@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile Layout 4 — Profile + Settings List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900">
+    <!-- Pattern: Profile header + grouped settings list (common in apps) -->
+    <div class="mx-auto max-w-[100vw] min-h-screen">
+      <header class="bg-white border-b border-slate-200/70">
+        <div class="px-[4vw] py-[5vw]">
+          <div class="flex items-center justify-between">
+            <h1 class="text-[5.2vw] font-extrabold">Profile</h1>
+            <button class="rounded-[3vw] border border-slate-200 bg-white px-[4vw] py-[2.2vw] text-[3.6vw] font-semibold hover:bg-slate-50" type="button">
+              Edit
+            </button>
+          </div>
+
+          <div class="mt-[5vw] flex items-center gap-[3.5vw]">
+            <div class="h-[16vw] w-[16vw] rounded-[5vw] bg-slate-900"></div>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-[4.8vw] font-extrabold">Alex Chen</p>
+              <p class="truncate text-[3.6vw] text-slate-600">alex.chen@example.com</p>
+              <div class="mt-[2vw] flex flex-wrap gap-[2vw]">
+                <span class="rounded-full bg-slate-900 px-[3vw] py-[1.4vw] text-[3.2vw] font-semibold text-white">Pro</span>
+                <span class="rounded-full bg-slate-100 px-[3vw] py-[1.4vw] text-[3.2vw] font-semibold text-slate-700">Member since 2024</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="px-[4vw] py-[5vw] space-y-[4vw]">
+        <!-- Group 1 -->
+        <section class="rounded-[5vw] border border-slate-200 bg-white overflow-hidden">
+          <div class="px-[4vw] py-[3vw] border-b border-slate-200/70">
+            <h2 class="text-[3.6vw] font-extrabold text-slate-700">Account</h2>
+          </div>
+
+          <button class="w-full flex items-center justify-between px-[4vw] py-[4vw] hover:bg-slate-50" type="button">
+            <span class="text-[4vw] font-semibold">Personal info</span>
+            <span class="text-[4vw] text-slate-400">›</span>
+          </button>
+          <button class="w-full flex items-center justify-between px-[4vw] py-[4vw] border-t border-slate-200/70 hover:bg-slate-50" type="button">
+            <span class="text-[4vw] font-semibold">Security</span>
+            <span class="text-[4vw] text-slate-400">›</span>
+          </button>
+          <button class="w-full flex items-center justify-between px-[4vw] py-[4vw] border-t border-slate-200/70 hover:bg-slate-50" type="button">
+            <span class="text-[4vw] font-semibold">Payment methods</span>
+            <span class="text-[4vw] text-slate-400">›</span>
+          </button>
+        </section>
+
+        <!-- Group 2 -->
+        <section class="rounded-[5vw] border border-slate-200 bg-white overflow-hidden">
+          <div class="px-[4vw] py-[3vw] border-b border-slate-200/70">
+            <h2 class="text-[3.6vw] font-extrabold text-slate-700">Preferences</h2>
+          </div>
+
+          <div class="flex items-center justify-between px-[4vw] py-[4vw]">
+            <div>
+              <p class="text-[4vw] font-semibold">Notifications</p>
+              <p class="mt-[1vw] text-[3.4vw] text-slate-600">Product updates and reminders</p>
+            </div>
+            <input class="h-[5.5vw] w-[10vw]" type="checkbox" checked aria-label="Toggle notifications" />
+          </div>
+
+          <div class="flex items-center justify-between px-[4vw] py-[4vw] border-t border-slate-200/70">
+            <div>
+              <p class="text-[4vw] font-semibold">Dark mode</p>
+              <p class="mt-[1vw] text-[3.4vw] text-slate-600">Use system setting</p>
+            </div>
+            <input class="h-[5.5vw] w-[10vw]" type="checkbox" aria-label="Toggle dark mode" />
+          </div>
+        </section>
+
+        <!-- Group 3 -->
+        <section class="rounded-[5vw] border border-slate-200 bg-white overflow-hidden">
+          <div class="px-[4vw] py-[3vw] border-b border-slate-200/70">
+            <h2 class="text-[3.6vw] font-extrabold text-slate-700">Support</h2>
+          </div>
+
+          <button class="w-full flex items-center justify-between px-[4vw] py-[4vw] hover:bg-slate-50" type="button">
+            <span class="text-[4vw] font-semibold">Help center</span>
+            <span class="text-[4vw] text-slate-400">›</span>
+          </button>
+          <button class="w-full flex items-center justify-between px-[4vw] py-[4vw] border-t border-slate-200/70 hover:bg-slate-50" type="button">
+            <span class="text-[4vw] font-semibold">Contact us</span>
+            <span class="text-[4vw] text-slate-400">›</span>
+          </button>
+          <button class="w-full flex items-center justify-between px-[4vw] py-[4vw] border-t border-slate-200/70 hover:bg-slate-50" type="button">
+            <span class="text-[4vw] font-semibold text-red-600">Sign out</span>
+            <span class="text-[4vw] text-slate-400">›</span>
+          </button>
+        </section>
+
+        <p class="text-center text-[3.2vw] text-slate-500">v1.0.0</p>
+      </main>
+    </div>
+  </body>
+</html>

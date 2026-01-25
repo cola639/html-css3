@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mobile Layout 5 — Social Feed + Stories + FAB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-900">
+    <!-- Pattern: Social feed with horizontal stories + vertical posts + floating action button -->
+    <div class="mx-auto max-w-[100vw] min-h-screen">
+      <!-- Header -->
+      <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-slate-200/70">
+        <div class="flex items-center justify-between px-[4vw] py-[3.5vw]">
+          <h1 class="text-[5.2vw] font-extrabold">Feed</h1>
+          <div class="flex items-center gap-[2.5vw]">
+            <button class="h-[10vw] w-[10vw] rounded-[3vw] border border-slate-200 bg-white text-[4vw] hover:bg-slate-50" type="button" aria-label="Search">
+              🔎
+            </button>
+            <button class="h-[10vw] w-[10vw] rounded-[3vw] bg-slate-900 text-white text-[4vw] hover:bg-slate-800" type="button" aria-label="Inbox">
+              ✉️
+            </button>
+          </div>
+        </div>
+
+        <!-- Stories -->
+        <div class="px-[4vw] pb-[3.5vw]">
+          <div class="flex gap-[3vw] overflow-x-auto [-webkit-overflow-scrolling:touch]">
+            <button class="shrink-0 flex flex-col items-center gap-[1.5vw]" type="button">
+              <span class="h-[16vw] w-[16vw] rounded-[6vw] bg-slate-900 text-white grid place-items-center text-[4vw] font-extrabold">+</span>
+              <span class="text-[3.2vw] font-semibold text-slate-700">New</span>
+            </button>
+            <div class="shrink-0 flex flex-col items-center gap-[1.5vw]">
+              <div class="h-[16vw] w-[16vw] rounded-[6vw] bg-slate-900"></div>
+              <span class="text-[3.2vw] font-semibold text-slate-700">Mia</span>
+            </div>
+            <div class="shrink-0 flex flex-col items-center gap-[1.5vw]">
+              <div class="h-[16vw] w-[16vw] rounded-[6vw] bg-slate-900"></div>
+              <span class="text-[3.2vw] font-semibold text-slate-700">Noah</span>
+            </div>
+            <div class="shrink-0 flex flex-col items-center gap-[1.5vw]">
+              <div class="h-[16vw] w-[16vw] rounded-[6vw] bg-slate-900"></div>
+              <span class="text-[3.2vw] font-semibold text-slate-700">Ava</span>
+            </div>
+            <div class="shrink-0 flex flex-col items-center gap-[1.5vw]">
+              <div class="h-[16vw] w-[16vw] rounded-[6vw] bg-slate-900"></div>
+              <span class="text-[3.2vw] font-semibold text-slate-700">Liam</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Posts -->
+      <main class="px-[4vw] py-[4vw] space-y-[4vw] pb-[16vw]">
+        <article class="rounded-[5vw] border border-slate-200 bg-white overflow-hidden">
+          <div class="flex items-center justify-between px-[4vw] py-[3.5vw]">
+            <div class="flex items-center gap-[3vw] min-w-0">
+              <div class="h-[11vw] w-[11vw] rounded-[4vw] bg-slate-900"></div>
+              <div class="min-w-0">
+                <p class="truncate text-[4vw] font-extrabold">Mia</p>
+                <p class="truncate text-[3.2vw] text-slate-500">2h • City park</p>
+              </div>
+            </div>
+            <button class="text-[5vw] text-slate-400 hover:text-slate-600" type="button" aria-label="More">
+              ⋯
+            </button>
+          </div>
+
+          <div class="aspect-[4/3] bg-slate-900"></div>
+
+          <div class="px-[4vw] py-[3.5vw]">
+            <div class="flex items-center justify-between">
+              <div class="flex gap-[3vw] text-[5vw]">
+                <button type="button" aria-label="Like">♥</button>
+                <button type="button" aria-label="Comment">💬</button>
+                <button type="button" aria-label="Share">↗</button>
+              </div>
+              <button class="text-[5vw]" type="button" aria-label="Save">🔖</button>
+            </div>
+
+            <p class="mt-[2.5vw] text-[3.8vw] leading-relaxed text-slate-700">
+              A simple feed layout: header + stories row + post cards. Everything uses vw sizing so it scales.
+            </p>
+            <p class="mt-[2vw] text-[3.2vw] text-slate-500">1,204 likes • View all 48 comments</p>
+          </div>
+        </article>
+
+        <article class="rounded-[5vw] border border-slate-200 bg-white overflow-hidden">
+          <div class="flex items-center justify-between px-[4vw] py-[3.5vw]">
+            <div class="flex items-center gap-[3vw] min-w-0">
+              <div class="h-[11vw] w-[11vw] rounded-[4vw] bg-slate-900"></div>
+              <div class="min-w-0">
+                <p class="truncate text-[4vw] font-extrabold">Noah</p>
+                <p class="truncate text-[3.2vw] text-slate-500">Yesterday • Studio</p>
+              </div>
+            </div>
+            <button class="text-[5vw] text-slate-400 hover:text-slate-600" type="button" aria-label="More">
+              ⋯
+            </button>
+          </div>
+
+          <div class="aspect-[4/3] bg-slate-900"></div>
+
+          <div class="px-[4vw] py-[3.5vw]">
+            <div class="flex items-center justify-between">
+              <div class="flex gap-[3vw] text-[5vw]">
+                <button type="button" aria-label="Like">♥</button>
+                <button type="button" aria-label="Comment">💬</button>
+                <button type="button" aria-label="Share">↗</button>
+              </div>
+              <button class="text-[5vw]" type="button" aria-label="Save">🔖</button>
+            </div>
+
+            <p class="mt-[2.5vw] text-[3.8vw] leading-relaxed text-slate-700">
+              Use <code class="rounded bg-slate-50 px-[1.5vw]">rounded-[5vw]</code> to keep corners consistent across devices.
+            </p>
+            <p class="mt-[2vw] text-[3.2vw] text-slate-500">842 likes • View all 12 comments</p>
+          </div>
+        </article>
+      </main>
+
+      <!-- Floating Action Button -->
+      <button
+        class="fixed bottom-[5vw] right-[4vw] z-50 h-[14vw] w-[14vw] rounded-[5vw] bg-slate-900 text-white text-[6vw] font-bold shadow-lg hover:bg-slate-800"
+        type="button"
+        aria-label="Create"
+      >
+        +
+      </button>
+    </div>
+  </body>
+</html>
