@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Layout 3 — Blog Article (Content + Aside)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-white text-slate-900">
+    <!-- Layout: Editorial/blog page with responsive header, article, and sidebar (stacked on mobile) -->
+    <header class="border-b border-slate-200/70">
+      <div class="mx-auto max-w-6xl px-4 py-5">
+        <div class="flex items-center justify-between gap-3">
+          <a href="#" class="flex items-center gap-2 font-semibold">
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-white">B</span>
+            <span>ByteBlog</span>
+          </a>
+
+          <nav class="hidden items-center gap-6 md:flex" aria-label="Primary">
+            <a class="text-sm text-slate-600 hover:text-slate-900" href="#">Guides</a>
+            <a class="text-sm text-slate-600 hover:text-slate-900" href="#">Tutorials</a>
+            <a class="text-sm text-slate-600 hover:text-slate-900" href="#">News</a>
+            <a class="text-sm text-slate-600 hover:text-slate-900" href="#">About</a>
+          </nav>
+
+          <div class="flex items-center gap-2">
+            <button class="hidden sm:inline-flex rounded-xl border border-slate-200 px-3 py-2 text-sm font-medium hover:bg-slate-50" type="button">
+              Subscribe
+            </button>
+
+            <details class="relative md:hidden">
+              <summary class="list-none cursor-pointer rounded-xl border border-slate-200 px-3 py-2 text-sm font-medium hover:bg-slate-50">
+                Menu
+              </summary>
+              <div class="absolute right-0 mt-2 w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg">
+                <a class="block rounded-xl px-3 py-2 text-sm hover:bg-slate-50" href="#">Guides</a>
+                <a class="block rounded-xl px-3 py-2 text-sm hover:bg-slate-50" href="#">Tutorials</a>
+                <a class="block rounded-xl px-3 py-2 text-sm hover:bg-slate-50" href="#">News</a>
+                <a class="block rounded-xl px-3 py-2 text-sm hover:bg-slate-50" href="#">About</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 py-10">
+      <!-- Hero area -->
+      <section class="rounded-3xl border border-slate-200 bg-slate-50 p-6 md:p-10">
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Engineering</p>
+        <h1 class="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">
+          A responsive article layout with a sticky table of contents
+        </h1>
+        <p class="mt-3 max-w-2xl text-base leading-relaxed text-slate-600">
+          Common blog structure: header, main article, and a sidebar that becomes a stacked section on mobile.
+          The TOC is sticky on desktop for easier reading.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-slate-600">
+          <span class="rounded-full bg-white px-3 py-1 font-semibold text-slate-700">8 min read</span>
+          <span>•</span>
+          <span>Updated <time datetime="2026-01-24">Jan 24, 2026</time></span>
+          <span>•</span>
+          <span>By Taylor</span>
+        </div>
+      </section>
+
+      <!-- Content + aside -->
+      <div class="mt-10 grid gap-8 lg:grid-cols-12">
+        <article class="lg:col-span-8">
+          <div class="prose max-w-none">
+            <h2 id="intro" class="text-xl font-extrabold">1) Introduction</h2>
+            <p class="mt-3 text-slate-700 leading-relaxed">
+              This is a plain HTML + Tailwind example. On small screens, the sidebar content moves below the article.
+              On larger screens, it sits to the right and can be sticky.
+            </p>
+
+            <h2 id="structure" class="mt-10 text-xl font-extrabold">2) Structure</h2>
+            <p class="mt-3 text-slate-700 leading-relaxed">
+              Use a grid with <code class="rounded bg-slate-50 px-1">lg:grid-cols-12</code> and assign spans for content
+              and aside. The table of contents uses <code class="rounded bg-slate-50 px-1">lg:sticky</code>.
+            </p>
+
+            <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5">
+              <h3 class="text-sm font-bold">Example callout</h3>
+              <p class="mt-2 text-sm text-slate-600">
+                Keep line-length comfortable for reading. A max width plus padding improves readability across devices.
+              </p>
+            </div>
+
+            <h2 id="patterns" class="mt-10 text-xl font-extrabold">3) Common patterns</h2>
+            <ul class="mt-3 list-disc pl-6 text-slate-700 space-y-2">
+              <li>Sticky TOC / related posts on desktop</li>
+              <li>Author card and newsletter CTA</li>
+              <li>Footer links and category navigation</li>
+            </ul>
+
+            <h2 id="conclusion" class="mt-10 text-xl font-extrabold">4) Conclusion</h2>
+            <p class="mt-3 text-slate-700 leading-relaxed">
+              This layout is great for documentation, knowledge base articles, and long-form posts.
+              You can reuse the same structure in React/Vue by splitting it into components.
+            </p>
+
+            <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl border border-slate-200 bg-slate-50 p-5">
+              <p class="text-sm font-medium text-slate-700">Enjoyed this? Subscribe for more layouts.</p>
+              <a href="#" class="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">Subscribe</a>
+            </div>
+          </div>
+        </article>
+
+        <aside class="lg:col-span-4">
+          <div class="space-y-4 lg:sticky lg:top-6">
+            <section class="rounded-2xl border border-slate-200 bg-white p-5">
+              <h2 class="text-sm font-bold">Table of contents</h2>
+              <nav class="mt-3 space-y-1 text-sm" aria-label="Table of contents">
+                <a class="block rounded-xl px-3 py-2 hover:bg-slate-50" href="#intro">Introduction</a>
+                <a class="block rounded-xl px-3 py-2 hover:bg-slate-50" href="#structure">Structure</a>
+                <a class="block rounded-xl px-3 py-2 hover:bg-slate-50" href="#patterns">Common patterns</a>
+                <a class="block rounded-xl px-3 py-2 hover:bg-slate-50" href="#conclusion">Conclusion</a>
+              </nav>
+            </section>
+
+            <section class="rounded-2xl border border-slate-200 bg-white p-5">
+              <h2 class="text-sm font-bold">About the author</h2>
+              <div class="mt-3 flex items-center gap-3">
+                <div class="h-12 w-12 rounded-2xl bg-slate-900"></div>
+                <div class="min-w-0">
+                  <p class="truncate text-sm font-semibold">Taylor</p>
+                  <p class="truncate text-xs text-slate-500">Frontend engineer</p>
+                </div>
+              </div>
+              <p class="mt-3 text-sm text-slate-600">
+                Writes about UI architecture, performance, and design systems.
+              </p>
+            </section>
+
+            <section class="rounded-2xl border border-slate-200 bg-white p-5">
+              <h2 class="text-sm font-bold">Related posts</h2>
+              <ul class="mt-3 space-y-2 text-sm text-slate-700">
+                <li><a class="hover:underline" href="#">Designing responsive grids</a></li>
+                <li><a class="hover:underline" href="#">Accessible navigation patterns</a></li>
+                <li><a class="hover:underline" href="#">Tailwind for component libraries</a></li>
+              </ul>
+            </section>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="border-t border-slate-200/70">
+      <div class="mx-auto max-w-6xl px-4 py-10">
+        <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <p class="text-sm text-slate-600">© <span id="year"></span> ByteBlog</p>
+          <div class="flex flex-wrap gap-4 text-sm">
+            <a class="text-slate-600 hover:text-slate-900" href="#">RSS</a>
+            <a class="text-slate-600 hover:text-slate-900" href="#">Privacy</a>
+            <a class="text-slate-600 hover:text-slate-900" href="#">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
