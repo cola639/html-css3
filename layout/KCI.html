@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Layout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100 p-6">
+    <!-- If screen < 1280px, allow horizontal scroll (because min width is 1280) -->
+    <div class="overflow-x-auto">
+      <!-- Outer container: min 1280, max 1440, padding 20 -->
+      <div class="mx-auto w-full min-w-[1280px] max-w-[1440px] rounded-2xl border bg-white p-5">
+        <!-- Grid: 30% / divider / 70%
+             fr units split ONLY the remaining space (excluding gaps & padding) ✅ -->
+        <div class="grid grid-cols-[3fr_1px_7fr] gap-x-[45px] items-stretch">
+          <!-- Left column (30%) -->
+          <div class="flex flex-col gap-5">
+            <div class="w-full h-[180px] rounded-xl border bg-white p-4 flex items-center justify-center">box1</div>
+            <div class="w-full h-[320px] rounded-xl border bg-white p-4 flex items-center justify-center">box2</div>
+          </div>
+
+          <!-- Divider -->
+          <div class="bg-gray-300 w-px h-full"></div>
+
+          <!-- Right column (70%) -->
+          <div class="flex flex-col gap-5">
+            <div class="w-full h-[120px] rounded-xl border bg-white p-4 flex items-center justify-center">box3</div>
+            <div class="w-full h-[160px] rounded-xl border bg-white p-4 flex items-center justify-center">box4</div>
+            <div class="w-full h-[120px] rounded-xl border bg-white p-4 flex items-center justify-center">box5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
